@@ -1,7 +1,8 @@
 package com.aq.blogapp.exceptions;
 
-
 import lombok.Data;
+
+
 
 @Data
 public class ResourceNotFoundException extends RuntimeException {

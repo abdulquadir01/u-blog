@@ -1,10 +1,11 @@
 package com.aq.blogapp.controllers;
 
 
-import com.aq.blogapp.DTO.UserDTO;
+import com.aq.blogapp.DTO.CategoryDTO;
+import com.aq.blogapp.exceptions.ResourceNotFoundException;
+import com.aq.blogapp.respositories.CategoryRepository;
+import com.aq.blogapp.services.CategoryService;
 import com.aq.blogapp.utils.ApiResponse;
-import com.aq.blogapp.respositories.UserRepository;
-import com.aq.blogapp.services.UserService;
 import com.aq.blogapp.utils.AppUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,28 +16,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
 @RestController
-@RequestMapping("/api/users")
-public class UserController {
+@RequestMapping("/api/categories")
+public class CategoryController {
 
-    private final UserService userService;
+    private final CategoryService categoryService;
 
-    private  final UserRepository userRepository;
+    private  final CategoryRepository categoryRepository;
 
-    public UserController(UserService userService, UserRepository userRepository) {
-        this.userService = userService;
-        this.userRepository = userRepository;
+    public CategoryController(CategoryService categoryService, CategoryRepository categoryRepository) {
+        this.categoryService = categoryService;
+        this.categoryRepository = categoryRepository;
     }
 
-
     @GetMapping
-    public ResponseEntity<Object> getAllUsers() {
-        List<UserDTO> userDTOList = new ArrayList<>();
+    public ResponseEntity<Object> getAllCategory() {
+        List<CategoryDTO> categoryDTOList = new ArrayList<>();
 
         try{
-            userDTOList = userService.getAllUsers(); //db intereraction
-            return new ResponseEntity<>(userDTOList, HttpStatus.OK);
+            categoryDTOList = categoryService.getAllCategory();
+            return new ResponseEntity<>(categoryDTOList, HttpStatus.OK);
 
         }catch (Exception ex){
             return new ResponseEntity<>(
@@ -45,22 +44,21 @@ public class UserController {
                             HttpStatus.INTERNAL_SERVER_ERROR.value()),
                     HttpStatus.INTERNAL_SERVER_ERROR
             );
-
         }
 
     }
 
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<Object> getUserById(@PathVariable Long userId){
-        UserDTO userDTOById = new UserDTO();
+    @GetMapping("/{categoryId}")
+    public ResponseEntity<Object> getCategoryById(@PathVariable Long categoryId){
+        CategoryDTO categoryDtoById = new CategoryDTO();
 
         try{
-            userDTOById = userService.getUserById(userId);
-            System.out.println(userDTOById.toString());
-            return new ResponseEntity<>( userDTOById, HttpStatus.OK);
+            categoryDtoById = categoryService.getCategoryById(categoryId);
+            System.out.println(categoryDtoById.toString());
+            return new ResponseEntity<>( categoryDtoById, HttpStatus.OK);
 
-        } catch (Exception ex){
+        } catch (ResourceNotFoundException ex){
             return  new ResponseEntity<>(
                     new ApiResponse(
                             HttpStatus.NOT_FOUND.getReasonPhrase(),
@@ -71,26 +69,16 @@ public class UserController {
 
     }
 
-//    @GetMapping("/{userId}")
-//    public ResponseEntity<Object> getById(@PathVariable Long userId){
-//        try{
-//            Object result = userRepository.findById(userId).get();
-//                return  new ResponseEntity<>(result, HttpStatus.OK);
-//          }catch (NoSuchElementException ex1){
-//            return  new ResponseEntity<>("Resource not found", HttpStatus.NOT_FOUND);
-//
-//          }catch(Exception ex){
-//              return  new ResponseEntity<>("Internal Server Error", HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
-
 
     @PostMapping
-    public ResponseEntity<Object> createUser(@Valid @RequestBody UserDTO userDTO){
-        UserDTO createdUserDTO = new UserDTO();
+    public ResponseEntity<Object> createUser(@Valid @RequestBody CategoryDTO categoryDTO){
+        CategoryDTO createdCategoryDto = new CategoryDTO();
+
         try{
-            if(!AppUtils.anyEmpty(userDTO)){
-                createdUserDTO = userService.createUser(userDTO);
-                return  new ResponseEntity<>(createdUserDTO, HttpStatus.CREATED);
+            if(!AppUtils.anyEmpty(categoryDTO)){
+                createdCategoryDto = categoryService.createCategory(categoryDTO);
+
+                return  new ResponseEntity<>(createdCategoryDto, HttpStatus.CREATED);
             }
             else {
                 return new ResponseEntity<>(
@@ -112,14 +100,14 @@ public class UserController {
     }
 
 
-    @PutMapping("/{userId}")
-    public ResponseEntity<Object> updateUser(@PathVariable Long userId,@Valid @RequestBody UserDTO userDTO){
-        UserDTO updatedUser = new UserDTO();
+    @PutMapping("/{categoryId}")
+    public ResponseEntity<Object> updateUser(@PathVariable Long categoryId,@Valid @RequestBody CategoryDTO categoryDTO){
+        CategoryDTO updatedCategory = new CategoryDTO();
 
         try{
 
-            updatedUser = userService.updateUser(userId, userDTO);
-            return new ResponseEntity<>( updatedUser, HttpStatus.OK);
+            updatedCategory = categoryService.updateCategory(categoryId, categoryDTO);
+            return new ResponseEntity<>( updatedCategory, HttpStatus.OK);
 
         }catch (Exception ex){
             return new ResponseEntity<>(
@@ -133,14 +121,15 @@ public class UserController {
     }
 
 
-    @DeleteMapping("/{userId}")
-    public ResponseEntity<Object> deleteUser(@PathVariable Long userId){
+    @DeleteMapping("/{categoryId}")
+    public ResponseEntity<Object> deleteUser(@PathVariable Long categoryId){
+
         try{
-            userService.deleteUser(userId);
+            categoryService.deleteCategory(categoryId);
              return new ResponseEntity<>(
                      new ApiResponse(
-                             "User Deleted Successfully",
-                             HttpStatus.OK.value() ),
+                             "Category Deleted Successfully",
+                             HttpStatus.OK.value()),
                      HttpStatus.OK
              );
 

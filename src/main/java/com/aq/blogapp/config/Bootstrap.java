@@ -1,6 +1,8 @@
 package com.aq.blogapp.config;
 
+import com.aq.blogapp.model.Category;
 import com.aq.blogapp.model.User;
+import com.aq.blogapp.respositories.CategoryRepository;
 import com.aq.blogapp.respositories.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -12,14 +14,36 @@ import org.springframework.stereotype.Component;
 public class Bootstrap implements CommandLineRunner {
 
     private final UserRepository userRepository;
+    private final CategoryRepository categoryRepository;
 
-    public Bootstrap(UserRepository userRepository) {
+    public Bootstrap(UserRepository userRepository, CategoryRepository categoryRepository) {
         this.userRepository = userRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     @Override
     public void run(String... args) throws Exception {
         loadUsers();
+        loadCategories();
+    }
+
+    private void loadCategories() {
+        Category sports = new Category();
+        sports.setCategoryTitle("Sports");
+        sports.setCategoryDescription("In this section we'll be having all the blogs related to world sports");
+        categoryRepository.save(sports);
+
+        Category tech = new Category();
+        tech.setCategoryTitle("Technology");
+        tech.setCategoryDescription("This section is dedicated to the all the happenings in the tech world");
+        categoryRepository.save(tech);
+
+        Category movies = new Category();
+        movies.setCategoryTitle("Movies");
+        movies.setCategoryDescription("We'll be talking about the best upcoming movies as well as the all time favourites");
+        categoryRepository.save(movies);
+
+        System.out.println("Number of Categories in DB : "+categoryRepository.count());
     }
 
     private void loadUsers() {

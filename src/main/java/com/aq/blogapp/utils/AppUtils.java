@@ -3,7 +3,8 @@ package com.aq.blogapp.utils;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.util.HashMap;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 public class AppUtils {
@@ -20,8 +21,10 @@ public class AppUtils {
         Map<String, Object> mappedObj = objectMapper.convertValue(obj, Map.class);
         Boolean result = false;
 
-        for(Object key : mappedObj.keySet()){
-            if( key== "id" && mappedObj.get(key)==null ){
+        List<String> idList = Arrays.asList("userId", "categoryId");
+
+        for(String key : mappedObj.keySet()){
+            if( idList.contains(key) && mappedObj.get(key)==null ){
                 continue;
             }
             if(mappedObj.get(key)==null) {

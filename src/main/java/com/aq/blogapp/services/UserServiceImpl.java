@@ -67,16 +67,11 @@ public class UserServiceImpl implements UserService {
     public UserDTO createUser(UserDTO userDTO) {
         UserDTO newUserDTO = new UserDTO();
 
-//        try {
+
             if (!AppUtils.anyEmpty(userDTO)) {
-                newUserDTO = saveAndReturnUserDTO(userMapper.userDtoToUser(userDTO));
+                newUserDTO = saveAndReturnDTO(userMapper.userDtoToUser(userDTO));
             }
-//        } catch (NullPointerException npe) {
-//            npe.getMessage();
-//        } catch (Exception ex) {
-//            ex.getMessage();
-//            newUserDTO = null;
-//        }
+
         return newUserDTO;
     }
 
@@ -117,18 +112,17 @@ public class UserServiceImpl implements UserService {
             throw new ResourceNotFoundException("User", "id", id);
         }
 
-
     }
 
 
     //  PRIVATE methods
-    private UserDTO saveAndReturnUserDTO(User user) {
+    private UserDTO saveAndReturnDTO(User user) {
         UserDTO returnedDto = new UserDTO();
 
-            if (user != null) {
-                User savedUser = userRepository.save(user);
-                returnedDto = userMapper.userToUserDto(savedUser);
-            }
+        if (user != null) {
+            User savedUser = userRepository.save(user);
+            returnedDto = userMapper.userToUserDto(savedUser);
+        }
 
         return returnedDto;
     }

@@ -13,12 +13,12 @@ import javax.persistence.*;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long userId;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 64)
     private String firstName;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 64)
     private String lastName;
 
     @Column(nullable = false, length = 64)

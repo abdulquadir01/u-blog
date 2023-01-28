@@ -15,7 +15,7 @@ import javax.validation.constraints.*;
 @AllArgsConstructor
 public class UserDTO {
 
-    private Long id;
+    private Long userId;
     @NotEmpty
     @Size(min=3, message = "First Name must be at least 3 characters")
     private String firstName;
