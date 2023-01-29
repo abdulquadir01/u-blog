@@ -5,6 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -22,4 +25,8 @@ public class Category {
 
     @Column(name = "description", nullable = false, length = 256)
     private String categoryDescription;
+
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Blog> blogs = new ArrayList<>();
+
 }
