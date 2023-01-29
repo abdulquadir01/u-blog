@@ -20,6 +20,7 @@ import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 
+
 @Service
 public class BlogServiceImpl implements BlogService {
 
@@ -29,7 +30,8 @@ public class BlogServiceImpl implements BlogService {
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
 
-    public BlogServiceImpl(BlogRepository blogRepository, BlogMapper blogMapper, UserRepository userRepository, CategoryRepository categoryRepository) {
+    public BlogServiceImpl(BlogRepository blogRepository, BlogMapper blogMapper,
+                           UserRepository userRepository, CategoryRepository categoryRepository) {
         this.blogRepository = blogRepository;
         this.blogMapper = blogMapper;
         this.userRepository = userRepository;
@@ -38,11 +40,16 @@ public class BlogServiceImpl implements BlogService {
 
 
     @Override
-    public List<Blog> getAllBlog() {
-        List<Blog> blogs = new ArrayList<>();
+    public List<BlogDTO> getAllBlog() {
+        List<BlogDTO> blogDTOList = new ArrayList<>();
 
-        blogs = blogRepository.findAll();
-        return blogs;
+        blogDTOList = blogRepository
+                    .findAll()
+                    .stream()
+                    .map(blogMapper::blogToBlogDto)
+                    .collect(Collectors.toList());
+
+        return blogDTOList;
     }
 
     @Override
@@ -52,9 +59,9 @@ public class BlogServiceImpl implements BlogService {
         try{
             if(id !=null) {
                 blogDTO = blogRepository
-                        .findById(id)
-                        .map(blogMapper::blogToBlogDto)
-                        .orElseThrow(() -> new ResourceNotFoundException("Blog", "BlogId", id));
+                                .findById(id)
+                                .map(blogMapper::blogToBlogDto)
+                                .orElseThrow(() -> new ResourceNotFoundException("Blog", "BlogId", id));
             }
         }
         catch (NoSuchElementException ex){
@@ -67,17 +74,23 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public BlogDTO createBlog(BlogDTO blogDTO, Long userId, Long categoryId) {
         BlogDTO newBlogDTO = new BlogDTO();
+        Blog createdBlog = new Blog();
+        Blog newBlog = new Blog();
 
-        User user = userRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User", "userId", userId));
-        Category category = categoryRepository.findById(categoryId).orElseThrow(()-> new ResourceNotFoundException("Category", "categoryId", categoryId));
+        User user = userRepository
+                        .findById(userId)
+                        .orElseThrow(()-> new ResourceNotFoundException("User", "userId", userId));
+        Category category = categoryRepository
+                                .findById(categoryId)
+                                .orElseThrow(()-> new ResourceNotFoundException("Category", "categoryId", categoryId));
 
-        Blog newBlog = blogMapper.blogDtoToBlog(blogDTO);
+        newBlog = blogMapper.blogDtoToBlog(blogDTO);
         newBlog.setImageName("default.png");
         newBlog.setBloggedDate(new Date());
         newBlog.setUser(user);
         newBlog.setCategory(category);
 
-        Blog createdBlog = blogRepository.save(newBlog);
+        createdBlog = blogRepository.save(newBlog);
 
         newBlogDTO = blogMapper.blogToBlogDto(createdBlog);
 
@@ -87,18 +100,19 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public BlogDTO updateBlog(Long id, BlogDTO blogDTO) {
         BlogDTO updatedBlog = new BlogDTO();
+        Blog savedBlog = new Blog();
 
         try{
 
             Blog exitingBlog = blogRepository
-                    .findById(id)
-                    .orElseThrow( ()-> new ResourceNotFoundException("Blog", "blogId", id));
+                                    .findById(id)
+                                    .orElseThrow( ()-> new ResourceNotFoundException("Blog", "blogId", id));
 
             exitingBlog.setTitle(blogDTO.getTitle());
             exitingBlog.setContent(blogDTO.getContent());
             exitingBlog.setImageName(blogDTO.getImageName());
 
-            Blog savedBlog = blogRepository.save(exitingBlog);
+            savedBlog = blogRepository.save(exitingBlog);
 
             updatedBlog = blogMapper.blogToBlogDto(savedBlog);
 
@@ -112,16 +126,17 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public List<BlogDTO> getBlogsByCategory(Long categoryId) {
+        List<BlogDTO> allBlogsByCategory = new ArrayList<>();
 
         Category category = categoryRepository
                                 .findById(categoryId)
                                 .orElseThrow( ()-> new ResourceNotFoundException("Category", "categoryId", categoryId) );
 
-        List<BlogDTO> allBlogsByCategory = blogRepository
-                                        .findAllByCategory(category)
-                                        .stream()
-                                        .map( blog -> blogMapper.blogToBlogDto(blog))
-                                        .collect(Collectors.toList());
+        allBlogsByCategory = blogRepository
+                                    .findAllByCategory(category)
+                                    .stream()
+                                    .map(blogMapper::blogToBlogDto)
+                                    .collect(Collectors.toList());
 
         return allBlogsByCategory;
     }
@@ -130,16 +145,17 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public List<BlogDTO> getBlogsByUser(Long userId) {
+        List<BlogDTO> allBlogsByUser = new ArrayList<>();
 
         User user = userRepository
                         .findById(userId)
                         .orElseThrow(()-> new ResourceNotFoundException("User", "userId", userId));
 
-        List<BlogDTO> allBlogsByUser = blogRepository
-                                        .findAllByUser(user)
-                                        .stream()
-                                        .map( blog -> blogMapper.blogToBlogDto(blog))
-                                        .collect(Collectors.toList());
+       allBlogsByUser = blogRepository
+                            .findAllByUser(user)
+                            .stream()
+                            .map(blogMapper::blogToBlogDto)
+                            .collect(Collectors.toList());
 
         return allBlogsByUser;
     }
@@ -147,10 +163,12 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public void deleteBlog(Long id) {
 
-        UserDTO deletedUser = userRepository
-                .findById(id)
-                .map(UserMapper.INSTANCE::userToUserDto)
-                .orElseThrow( ()-> new ResourceNotFoundException("User", "userId", id) );
+        UserDTO deletedUser = new UserDTO();
+
+        deletedUser = userRepository
+                                .findById(id)
+                                .map(UserMapper.INSTANCE::userToUserDto)
+                                .orElseThrow( ()-> new ResourceNotFoundException("User", "userId", id) );
 
         blogRepository.deleteById(id);
 

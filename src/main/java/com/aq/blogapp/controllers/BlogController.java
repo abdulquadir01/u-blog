@@ -2,13 +2,9 @@ package com.aq.blogapp.controllers;
 
 
 import com.aq.blogapp.DTO.BlogDTO;
-import com.aq.blogapp.DTO.CategoryDTO;
 import com.aq.blogapp.exceptions.ResourceNotFoundException;
-import com.aq.blogapp.mappers.BlogMapper;
-import com.aq.blogapp.model.Blog;
 import com.aq.blogapp.services.BlogService;
 import com.aq.blogapp.utils.ApiResponse;
-import com.aq.blogapp.utils.AppUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
+
 
 
 @RestController
@@ -25,25 +22,19 @@ public class BlogController {
 
     private final BlogService blogService;
 
-    private  final BlogMapper blogMapper;
-
-    public BlogController(BlogService blogService, BlogMapper blogMapper) {
+    public BlogController(BlogService blogService) {
         this.blogService = blogService;
-        this.blogMapper = blogMapper;
     }
 
 
     @GetMapping("/blogs")
     public ResponseEntity<Object> getAllBlogs() {
-        List<BlogDTO> allBlogs = new ArrayList<>();
+        List<BlogDTO> blogDTOList = new ArrayList<>();
 
         try{
-            allBlogs = blogService
-                            .getAllBlog()
-                            .stream()
-                            .map(blog -> blogMapper.blogToBlogDto(blog))
-                            .collect(Collectors.toList());
-            return new ResponseEntity<>(allBlogs, HttpStatus.OK);
+            blogDTOList = blogService.getAllBlog();
+
+            return new ResponseEntity<>(blogDTOList, HttpStatus.OK);
 
         }catch (Exception ex){
             return new ResponseEntity<>(
@@ -64,6 +55,7 @@ public class BlogController {
         try{
             blogDTOById = blogService.getBlogById(blogId);
 //            System.out.println(blog.toString());
+
             return new ResponseEntity<>( blogDTOById, HttpStatus.OK);
 
         } catch (ResourceNotFoundException ex){
@@ -85,6 +77,7 @@ public class BlogController {
         try{
             allBlogsByCategory = blogService.getBlogsByCategory(categoryId);
 //            System.out.println(blog.toString());
+
             return new ResponseEntity<>( allBlogsByCategory, HttpStatus.OK);
 
         } catch (ResourceNotFoundException ex){
@@ -105,6 +98,7 @@ public class BlogController {
 
         try{
             allBlogsByUser = blogService.getBlogsByUser(userId);
+
             return new ResponseEntity<>( allBlogsByUser, HttpStatus.OK);
 
         } catch (ResourceNotFoundException ex){
@@ -128,9 +122,7 @@ public class BlogController {
         try{
 //            if(!AppUtils.anyEmpty(blogDTO)){
             if(true){
-//                System.out.println("blogs create krne wala hai");
                 newBlogDTO = blogService.createBlog(blogDTO, userId, categoryId);
-//                System.out.println("blogs create kr liya hai");
 
                 return  new ResponseEntity<>(newBlogDTO, HttpStatus.CREATED);
             }
@@ -146,8 +138,8 @@ public class BlogController {
         }catch (Exception ex){
              return new  ResponseEntity<>(
                     new ApiResponse(
-                    HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),
-                    HttpStatus.INTERNAL_SERVER_ERROR.value()),
+                            HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),
+                            HttpStatus.INTERNAL_SERVER_ERROR.value()),
                     HttpStatus.INTERNAL_SERVER_ERROR
              );
         }
@@ -167,7 +159,7 @@ public class BlogController {
         catch (Exception ex){
             return new ResponseEntity<>(
                     new ApiResponse(
-                            String.format("Internal Server Error"),
+                            "Internal Server Error",
                             HttpStatus.INTERNAL_SERVER_ERROR.value()),
                     HttpStatus.INTERNAL_SERVER_ERROR
                     );
@@ -183,7 +175,7 @@ public class BlogController {
             blogService.deleteBlog(blogId);
              return new ResponseEntity<>(
                      new ApiResponse(
-                             String.format("Category Deleted Successfully"),
+                             "Category Deleted Successfully",
                              HttpStatus.OK.value()),
                      HttpStatus.OK
              );

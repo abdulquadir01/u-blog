@@ -3,7 +3,6 @@ package com.aq.blogapp.controllers;
 
 import com.aq.blogapp.DTO.CategoryDTO;
 import com.aq.blogapp.exceptions.ResourceNotFoundException;
-import com.aq.blogapp.respositories.CategoryRepository;
 import com.aq.blogapp.services.CategoryService;
 import com.aq.blogapp.utils.ApiResponse;
 import com.aq.blogapp.utils.AppUtils;
@@ -22,12 +21,10 @@ public class CategoryController {
 
     private final CategoryService categoryService;
 
-    private  final CategoryRepository categoryRepository;
-
-    public CategoryController(CategoryService categoryService, CategoryRepository categoryRepository) {
+    public CategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;
-        this.categoryRepository = categoryRepository;
     }
+
 
     @GetMapping
     public ResponseEntity<Object> getAllCategory() {
@@ -35,9 +32,11 @@ public class CategoryController {
 
         try{
             categoryDTOList = categoryService.getAllCategory();
+
             return new ResponseEntity<>(categoryDTOList, HttpStatus.OK);
 
         }catch (Exception ex){
+
             return new ResponseEntity<>(
                     new ApiResponse(
                             HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),
@@ -56,9 +55,11 @@ public class CategoryController {
         try{
             categoryDtoById = categoryService.getCategoryById(categoryId);
             System.out.println(categoryDtoById.toString());
+
             return new ResponseEntity<>( categoryDtoById, HttpStatus.OK);
 
         } catch (ResourceNotFoundException ex){
+
             return  new ResponseEntity<>(
                     new ApiResponse(
                             HttpStatus.NOT_FOUND.getReasonPhrase(),
@@ -81,6 +82,7 @@ public class CategoryController {
                 return  new ResponseEntity<>(createdCategoryDto, HttpStatus.CREATED);
             }
             else {
+
                 return new ResponseEntity<>(
                         new ApiResponse(
                                 HttpStatus.BAD_REQUEST.getReasonPhrase(),
@@ -90,10 +92,11 @@ public class CategoryController {
             }
 
         }catch (Exception ex){
-             return new  ResponseEntity<>(
+
+            return new  ResponseEntity<>(
                     new ApiResponse(
-                    HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),
-                    HttpStatus.INTERNAL_SERVER_ERROR.value()),
+                            HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),
+                            HttpStatus.INTERNAL_SERVER_ERROR.value()),
                     HttpStatus.INTERNAL_SERVER_ERROR
              );
         }
@@ -105,17 +108,18 @@ public class CategoryController {
         CategoryDTO updatedCategory = new CategoryDTO();
 
         try{
-
             updatedCategory = categoryService.updateCategory(categoryId, categoryDTO);
+
             return new ResponseEntity<>( updatedCategory, HttpStatus.OK);
 
         }catch (Exception ex){
+
             return new ResponseEntity<>(
                     new ApiResponse(
                             "Internal Server Error",
                             HttpStatus.INTERNAL_SERVER_ERROR.value()),
                     HttpStatus.INTERNAL_SERVER_ERROR
-                    );
+            );
         }
 
     }
@@ -126,14 +130,16 @@ public class CategoryController {
 
         try{
             categoryService.deleteCategory(categoryId);
-             return new ResponseEntity<>(
+
+            return new ResponseEntity<>(
                      new ApiResponse(
                              "Category Deleted Successfully",
                              HttpStatus.OK.value()),
                      HttpStatus.OK
-             );
+            );
 
         }catch (Exception ex){
+
             return new ResponseEntity<>(
                     new ApiResponse(
                             HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),

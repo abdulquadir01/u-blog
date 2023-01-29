@@ -1,10 +1,12 @@
 package com.aq.blogapp.exceptions;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class ResourceNotFoundException extends RuntimeException {
 
     private String resourceName;

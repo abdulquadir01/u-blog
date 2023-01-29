@@ -1,5 +1,6 @@
 package com.aq.blogapp.config;
 
+import com.aq.blogapp.model.Blog;
 import com.aq.blogapp.model.Category;
 import com.aq.blogapp.model.User;
 import com.aq.blogapp.respositories.CategoryRepository;
@@ -25,6 +26,13 @@ public class Bootstrap implements CommandLineRunner {
     public void run(String... args) throws Exception {
         loadUsers();
         loadCategories();
+//        loadBlogs();
+    }
+
+    private void loadBlogs() {
+        Blog blog1 = new Blog();
+
+
     }
 
     private void loadCategories() {

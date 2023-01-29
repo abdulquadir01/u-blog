@@ -1,11 +1,9 @@
 package com.aq.blogapp.services;
 
 import com.aq.blogapp.DTO.CategoryDTO;
-import com.aq.blogapp.DTO.UserDTO;
 import com.aq.blogapp.exceptions.ResourceNotFoundException;
 import com.aq.blogapp.mappers.CategoryMapper;
 import com.aq.blogapp.model.Category;
-import com.aq.blogapp.model.User;
 import com.aq.blogapp.respositories.CategoryRepository;
 import com.aq.blogapp.utils.AppUtils;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -37,10 +35,11 @@ public class CategoryServiceImpl implements CategoryService {
 
         List<CategoryDTO> categoryDTOList = new ArrayList<>();
 
-        categoryDTOList = categoryRepository.findAll()
-                    .stream()
-                    .map(categoryMapper::categoryToCategoryDto)
-                    .collect(Collectors.toList());
+        categoryDTOList = categoryRepository
+                                .findAll()
+                                .stream()
+                                .map(categoryMapper::categoryToCategoryDto)
+                                .collect(Collectors.toList());
 
         return categoryDTOList;
     }
@@ -53,9 +52,9 @@ public class CategoryServiceImpl implements CategoryService {
         try {
             if (id != null) {
                 categoryDtoById = categoryRepository
-                        .findById(id)
-                        .map(categoryMapper::categoryToCategoryDto)
-                        .orElseThrow( ()-> new ResourceNotFoundException("Category", "CategoryId", id));
+                                        .findById(id)
+                                        .map(categoryMapper::categoryToCategoryDto)
+                                        .orElseThrow( ()-> new ResourceNotFoundException("Category", "CategoryId", id));
             }
         }catch (NoSuchElementException ex){
             throw new ResourceNotFoundException("Category", "CategoryId", id);
@@ -86,8 +85,10 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryDTO updateCategory(Long id, CategoryDTO categoryDTO) {
         CategoryDTO updatedCategory = new CategoryDTO();
+        Category existingCategory = new Category();
+
         try {
-            Category existingCategory = categoryRepository
+            existingCategory = categoryRepository
                                     .findById(id)
                                     .orElseThrow(() -> new ResourceNotFoundException("Category", "CategoryId", id));
 
@@ -130,4 +131,5 @@ public class CategoryServiceImpl implements CategoryService {
 
         return returnedDto;
     }
+
 }

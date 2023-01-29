@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserService {
 
-
     private final UserMapper userMapper;
     private final UserRepository userRepository;
 
@@ -35,10 +34,11 @@ public class UserServiceImpl implements UserService {
 
         List<UserDTO> userDTOList = new ArrayList<>();
 
-            userDTOList = userRepository.findAll()
-                    .stream()
-                    .map(userMapper::userToUserDto)
-                    .collect(Collectors.toList());
+        userDTOList = userRepository
+                            .findAll()
+                            .stream()
+                            .map(userMapper::userToUserDto)
+                            .collect(Collectors.toList());
 
         return userDTOList;
     }
@@ -51,9 +51,9 @@ public class UserServiceImpl implements UserService {
         try {
             if (id != null) {
                 userDTOById = userRepository
-                        .findById(id)
-                        .map(userMapper::userToUserDto)
-                        .orElseThrow( ()-> new ResourceNotFoundException("User", "Id", id));
+                                    .findById(id)
+                                    .map(userMapper::userToUserDto)
+                                    .orElseThrow( ()-> new ResourceNotFoundException("User", "Id", id));
             }
         }catch (NoSuchElementException ex){
             throw new ResourceNotFoundException("User", "userId", id);
@@ -79,10 +79,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO updateUser(Long id, UserDTO userDTO) {
         UserDTO updatedUser = new UserDTO();
+        User existingUser = new User();
         try {
-            User existingUser = userRepository
-                                    .findById(id)
-                                    .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
+            existingUser = userRepository
+                                .findById(id)
+                                .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
 
             existingUser.setFirstName(userDTO.getFirstName());
             existingUser.setLastName(userDTO.getLastName());
@@ -118,9 +119,10 @@ public class UserServiceImpl implements UserService {
     //  PRIVATE methods
     private UserDTO saveAndReturnDTO(User user) {
         UserDTO returnedDto = new UserDTO();
+        User savedUser = new User();
 
         if (user != null) {
-            User savedUser = userRepository.save(user);
+            savedUser = userRepository.save(user);
             returnedDto = userMapper.userToUserDto(savedUser);
         }
 

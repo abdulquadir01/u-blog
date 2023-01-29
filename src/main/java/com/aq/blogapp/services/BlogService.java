@@ -1,7 +1,6 @@
 package com.aq.blogapp.services;
 
 import com.aq.blogapp.DTO.BlogDTO;
-import com.aq.blogapp.model.Blog;
 
 import java.util.List;
 
@@ -10,7 +9,7 @@ import java.util.List;
 
 public interface BlogService {
 
-    List<Blog> getAllBlog();
+    List<BlogDTO> getAllBlog();
 
     BlogDTO getBlogById(Long id);
 

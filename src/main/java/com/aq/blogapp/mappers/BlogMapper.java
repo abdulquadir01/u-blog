@@ -1,11 +1,11 @@
 package com.aq.blogapp.mappers;
 
 import com.aq.blogapp.DTO.BlogDTO;
-import com.aq.blogapp.DTO.CategoryDTO;
 import com.aq.blogapp.model.Blog;
-import com.aq.blogapp.model.Category;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
+
+
 
 
 @Mapper
