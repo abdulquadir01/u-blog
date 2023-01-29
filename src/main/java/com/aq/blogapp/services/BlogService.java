@@ -23,6 +23,6 @@ public interface BlogService {
     BlogResponse getBlogsByUser(Long userId, Integer pageNumber, Integer pageSize, String sortBy, String sortDir);
 
     //    search for posts
-    List<BlogDTO> searchBlogs(String keywords);
+    List<BlogDTO> searchByTitle(String keywords);
 
 }

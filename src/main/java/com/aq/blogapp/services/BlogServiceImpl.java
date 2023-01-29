@@ -18,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -175,8 +176,15 @@ public class BlogServiceImpl implements BlogService {
 
 
     @Override
-    public List<BlogDTO> searchBlogs(String keywords) {
-        return null;
+    public List<BlogDTO> searchByTitle(String keywords) {
+        List<BlogDTO> searchedBlogs = new ArrayList<>();
+
+        searchedBlogs = blogRepository
+                            .findByTitleContaining(keywords)
+                            .stream().map(blogMapper::blogToBlogDto)
+                            .collect(Collectors.toList());
+
+        return searchedBlogs;
     }
 
 
@@ -221,5 +229,5 @@ public class BlogServiceImpl implements BlogService {
     }
 
 
-//EoM - End of Method
+//EoC - End of Class
 }

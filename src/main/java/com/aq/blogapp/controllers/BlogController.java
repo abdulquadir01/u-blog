@@ -10,6 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @RestController
@@ -201,4 +204,17 @@ public class BlogController {
         }
     }
 
+
+    //SEARCH METHOD
+    @GetMapping("/blogs/search/{keyword}")
+    public ResponseEntity<Object> searchBlogs(@PathVariable String keyword){
+        List<BlogDTO> searchedBlogs = new ArrayList<>();
+
+        searchedBlogs = blogService.searchByTitle(keyword);
+
+        return new ResponseEntity<>(searchedBlogs, HttpStatus.OK);
+    }
+
+
+//EoC - End of Class
 }
