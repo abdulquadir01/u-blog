@@ -31,8 +31,8 @@
 
 
 ### v1.4 - v1.5
-- migrate to NoSQL DB
-- make the backend reactive (*optional*)
+- :x: migrate to NoSQL DB
+- :x: make the backend reactive (*optional*)
 
 
 
