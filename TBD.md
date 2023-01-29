@@ -34,7 +34,9 @@
 - :x: migrate to NoSQL DB
 - :x: make the backend reactive (*optional*)
 
-
+<br>
+<br>
+<br>
 
 **Symbols**
 - :heavy_check_mark: - done
