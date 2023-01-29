@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 
-
-
 @RestController
 @RequestMapping("/api")
 public class BlogController {
@@ -28,12 +26,15 @@ public class BlogController {
     @GetMapping("/blogs")
     public ResponseEntity<Object> getAllBlogs(
             @RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
-            @RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize ){
+            @RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize,
+            @RequestParam(value = "sortBy", defaultValue = "postId", required = false) String sortBy,
+            @RequestParam(value = "sortDir", defaultValue = "asc", required = false) String sortDir) {
 
         BlogResponse blogResponse = new BlogResponse();
+        System.out.println("sortdir :" + sortDir);
 
         try {
-            blogResponse = blogService.getAllBlog(pageNumber, pageSize);
+            blogResponse = blogService.getAllBlog(pageNumber, pageSize, sortBy, sortDir);
 
             return new ResponseEntity<>(blogResponse, HttpStatus.OK);
 
@@ -74,12 +75,14 @@ public class BlogController {
     public ResponseEntity<Object> getBlogByCategory(
             @PathVariable Long categoryId,
             @RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
-            @RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize) {
+            @RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize,
+            @RequestParam(value = "sortBy", defaultValue = "postId", required = false) String sortBy,
+            @RequestParam(value = "sortDir", defaultValue = "asc", required = false) String sortDir) {
 
         BlogResponse blogsByCategoryResponse = new BlogResponse();
 
         try {
-            blogsByCategoryResponse = blogService.getBlogsByCategory(categoryId, pageNumber, pageSize);
+            blogsByCategoryResponse = blogService.getBlogsByCategory(categoryId, pageNumber, pageSize, sortBy, sortDir);
 
             return new ResponseEntity<>(blogsByCategoryResponse, HttpStatus.OK);
 
@@ -99,12 +102,14 @@ public class BlogController {
     public ResponseEntity<Object> getBlogByUser(
             @PathVariable Long userId,
             @RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
-            @RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize) {
+            @RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize,
+            @RequestParam(value = "sortBy", defaultValue = "postId", required = false) String sortBy,
+            @RequestParam(value = "sortDir", defaultValue = "asc", required = false) String sortDir) {
 
         BlogResponse blogsByUser = new BlogResponse();
 
         try {
-            blogsByUser = blogService.getBlogsByUser(userId, pageNumber, pageSize);
+            blogsByUser = blogService.getBlogsByUser(userId, pageNumber, pageSize, sortBy, sortDir);
 
             return new ResponseEntity<>(blogsByUser, HttpStatus.OK);
 

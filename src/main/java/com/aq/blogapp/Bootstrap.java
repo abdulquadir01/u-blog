@@ -36,7 +36,7 @@ public class Bootstrap implements CommandLineRunner {
     private void loadCategories() {
         Category sports = new Category();
         sports.setCategoryTitle("Sports");
-        sports.setCategoryDescription("In this section we'll be having all the blogs related to world sports");
+        sports.setCategoryDescription("In this section we'll have all the blogs related to world sports");
         categoryRepository.save(sports);
 
         Category tech = new Category();

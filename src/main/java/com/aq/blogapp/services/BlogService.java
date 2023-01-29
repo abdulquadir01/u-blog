@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface BlogService {
 
-    BlogResponse getAllBlog(Integer pageNumber, Integer pageSize);
+    BlogResponse getAllBlog(Integer pageNumber, Integer pageSize, String sortBy, String sortDir);
 
     BlogDTO getBlogById(Long id);
 
@@ -18,9 +18,9 @@ public interface BlogService {
 
     void deleteBlog(Long id);
 
-    BlogResponse getBlogsByCategory(Long categoryId, Integer pageNumber, Integer pageSize);
+    BlogResponse getBlogsByCategory(Long categoryId, Integer pageNumber, Integer pageSize, String sortBy, String sortDir);
 
-    BlogResponse getBlogsByUser(Long userId, Integer pageNumber, Integer pageSize);
+    BlogResponse getBlogsByUser(Long userId, Integer pageNumber, Integer pageSize, String sortBy, String sortDir);
 
     //    search for posts
     List<BlogDTO> searchBlogs(String keywords);

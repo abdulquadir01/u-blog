@@ -15,13 +15,15 @@ import com.aq.blogapp.respositories.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
+
+
 
 
 @Service
@@ -43,27 +45,13 @@ public class BlogServiceImpl implements BlogService {
 
 
     @Override
-    public BlogResponse getAllBlog(Integer pageNumber, Integer pageSize) {
+    public BlogResponse getAllBlog(Integer pageNumber, Integer pageSize, String sortBy, String sortDir) {
 
-        List<BlogDTO> blogDTOList = new ArrayList<>();
-        BlogResponse blogsByUserResponse = new BlogResponse();
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Pageable pageable = createSortedPageable(pageNumber, pageSize, sortBy, sortDir);
 
         Page<Blog> blogPage = blogRepository.findAll(pageable);
 
-        blogDTOList = blogPage.getContent()
-                .stream()
-                .map(blogMapper::blogToBlogDto)
-                .collect(Collectors.toList());
-
-        blogsByUserResponse.setBlogs(blogDTOList);
-        blogsByUserResponse.setPageNumber(blogPage.getNumber());
-        blogsByUserResponse.setPageSize(blogPage.getSize());
-        blogsByUserResponse.setTotalPages(blogPage.getTotalPages());
-        blogsByUserResponse.setTotalElements(blogPage.getTotalElements());
-        blogsByUserResponse.setLastPage(blogPage.isLast());
-
-        return blogsByUserResponse;
+        return createBlogResponse(blogPage);
     }
 
     @Override
@@ -139,11 +127,10 @@ public class BlogServiceImpl implements BlogService {
 
 
     @Override
-    public BlogResponse getBlogsByCategory(Long categoryId, Integer pageNumber, Integer pageSize) {
-        List<BlogDTO> blogsByCategory = new ArrayList<>();
-        BlogResponse blogsByUserResponse = new BlogResponse();
+    public BlogResponse getBlogsByCategory(Long categoryId, Integer pageNumber, Integer pageSize,
+                                           String sortBy, String sortDir) {
 
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Pageable pageable = createSortedPageable(pageNumber, pageSize, sortBy, sortDir);
 
         Category category = categoryRepository
                 .findById(categoryId)
@@ -151,28 +138,15 @@ public class BlogServiceImpl implements BlogService {
 
         Page<Blog> blogPage = blogRepository.findAllByCategory(category, pageable);
 
-        blogsByCategory = blogPage.getContent()
-                .stream()
-                .map(blogMapper::blogToBlogDto)
-                .collect(Collectors.toList());
-
-        blogsByUserResponse.setBlogs(blogsByCategory);
-        blogsByUserResponse.setPageNumber(blogPage.getNumber());
-        blogsByUserResponse.setPageSize(blogPage.getSize());
-        blogsByUserResponse.setTotalPages(blogPage.getTotalPages());
-        blogsByUserResponse.setTotalElements(blogPage.getTotalElements());
-        blogsByUserResponse.setLastPage(blogPage.isLast());
-
-        return blogsByUserResponse;
+        return createBlogResponse(blogPage);
     }
 
 
     @Override
-    public BlogResponse getBlogsByUser(Long userId, Integer pageNumber, Integer pageSize) {
-        List<BlogDTO> blogsByUser = new ArrayList<>();
-        BlogResponse blogsByUserResponse = new BlogResponse();
+    public BlogResponse getBlogsByUser(Long userId, Integer pageNumber, Integer pageSize,
+                                       String sortBy, String sortDir) {
 
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Pageable pageable = createSortedPageable(pageNumber, pageSize, sortBy, sortDir);
 
         User user = userRepository
                 .findById(userId)
@@ -181,20 +155,7 @@ public class BlogServiceImpl implements BlogService {
         Page<Blog> blogPage = blogRepository
                 .findAllByUser(user, pageable);
 
-        blogsByUser = blogPage
-                .getContent()
-                .stream()
-                .map(blogMapper::blogToBlogDto)
-                .collect(Collectors.toList());
-
-        blogsByUserResponse.setBlogs(blogsByUser);
-        blogsByUserResponse.setPageNumber(blogPage.getNumber());
-        blogsByUserResponse.setPageSize(blogPage.getSize());
-        blogsByUserResponse.setTotalPages(blogPage.getTotalPages());
-        blogsByUserResponse.setTotalElements(blogPage.getTotalElements());
-        blogsByUserResponse.setLastPage(blogPage.isLast());
-
-        return blogsByUserResponse;
+        return createBlogResponse(blogPage);
     }
 
 
@@ -212,9 +173,53 @@ public class BlogServiceImpl implements BlogService {
 
     }
 
+
     @Override
     public List<BlogDTO> searchBlogs(String keywords) {
         return null;
     }
 
+
+    //  ==================================================================
+//    PRIVATE METHODS
+    private BlogResponse createBlogResponse(Page<Blog> blogPage) {
+
+        BlogResponse blogResponse = new BlogResponse();
+
+        List<BlogDTO> blogs;
+        blogs = blogPage
+                .getContent()
+                .stream()
+                .map(blogMapper::blogToBlogDto)
+                .collect(Collectors.toList());
+
+        blogResponse.setBlogs(blogs);
+        blogResponse.setPageNumber(blogPage.getNumber());
+        blogResponse.setPageSize(blogPage.getSize());
+        blogResponse.setTotalPages(blogPage.getTotalPages());
+        blogResponse.setTotalElements(blogPage.getTotalElements());
+        blogResponse.setLastPage(blogPage.isLast());
+
+        return blogResponse;
+    }
+
+
+    private Pageable createSortedPageable(Integer pageNumber, Integer pageSize, String sortBy, String sortDir) {
+
+//      Be cautious of this statement
+//      !! CAUTION !! TBD - find a way to initialize sort with some other value than null
+        Sort sort = null;
+
+        if (sortDir.equalsIgnoreCase("asc")) {
+            sort = Sort.by(sortBy).ascending();
+        } else if (sortDir.equalsIgnoreCase("desc")) {
+            sort = Sort.by(sortBy).descending();
+        }
+
+//      !! CAUTION !! TBD - find a way to initialize sort with some other value than null
+        return PageRequest.of(pageNumber, pageSize, sort);
+    }
+
+
+//EoM - End of Method
 }
