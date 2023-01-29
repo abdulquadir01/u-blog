@@ -1,4 +1,4 @@
-package com.aq.blogapp.config;
+package com.aq.blogapp;
 
 import com.aq.blogapp.model.Blog;
 import com.aq.blogapp.model.Category;
@@ -7,8 +7,6 @@ import com.aq.blogapp.respositories.CategoryRepository;
 import com.aq.blogapp.respositories.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-
-
 
 
 @Component
@@ -24,8 +22,8 @@ public class Bootstrap implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        loadUsers();
-        loadCategories();
+//        loadUsers();
+//        loadCategories();
 //        loadBlogs();
     }
 
@@ -51,7 +49,7 @@ public class Bootstrap implements CommandLineRunner {
         movies.setCategoryDescription("We'll be talking about the best upcoming movies as well as the all time favourites");
         categoryRepository.save(movies);
 
-        System.out.println("Number of Categories in DB : "+categoryRepository.count());
+        System.out.println("Number of Categories in DB : " + categoryRepository.count());
     }
 
     private void loadUsers() {
@@ -80,6 +78,6 @@ public class Bootstrap implements CommandLineRunner {
         johnWick.setAbout("This guy is a Missionary");
         userRepository.save(johnWick);
 
-        System.out.println("Number of Users in DB : "+userRepository.count());
+        System.out.println("Number of Users in DB : " + userRepository.count());
     }
 }

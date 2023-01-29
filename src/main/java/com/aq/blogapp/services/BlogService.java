@@ -1,15 +1,14 @@
 package com.aq.blogapp.services;
 
 import com.aq.blogapp.DTO.BlogDTO;
+import com.aq.blogapp.payload.BlogResponse;
 
 import java.util.List;
 
 
-
-
 public interface BlogService {
 
-    List<BlogDTO> getAllBlog();
+    BlogResponse getAllBlog(Integer pageNumber, Integer pageSize);
 
     BlogDTO getBlogById(Long id);
 
@@ -19,11 +18,11 @@ public interface BlogService {
 
     void deleteBlog(Long id);
 
-    List<BlogDTO> getBlogsByCategory(Long categoryId);
+    BlogResponse getBlogsByCategory(Long categoryId, Integer pageNumber, Integer pageSize);
 
-    List<BlogDTO> getBlogsByUser(Long userId);
+    BlogResponse getBlogsByUser(Long userId, Integer pageNumber, Integer pageSize);
 
-//    search for posts
+    //    search for posts
     List<BlogDTO> searchBlogs(String keywords);
 
 }

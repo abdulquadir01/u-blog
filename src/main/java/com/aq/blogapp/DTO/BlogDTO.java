@@ -8,8 +8,6 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 
-
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,19 +15,19 @@ public class BlogDTO {
 
     private Long blogId;
 
-//    @NotEmpty
+    //    @NotEmpty
 //    @Size(min=4, message = "Blog title must be at least 4 characters")
     private String title;
 
-//    @NotEmpty
+    //    @NotEmpty
 //    @Size(min=10, message = "Blog contents must be at least 500 characters")
     private String content;
 
-//    @NotEmpty
+    //    @NotEmpty
 //    @Size(min=4, message = "Blog imageName must be at least 4 characters")
     private String imageName;
 
-//    @NotEmpty
+    //    @NotEmpty
 //    @Size(min=4, message = "Provide date of blogging")
     private Date bloggedDate;
 

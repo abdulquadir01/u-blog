@@ -2,8 +2,8 @@ package com.aq.blogapp.controllers;
 
 
 import com.aq.blogapp.DTO.UserDTO;
-import com.aq.blogapp.utils.ApiResponse;
 import com.aq.blogapp.services.UserService;
+import com.aq.blogapp.utils.ApiResponse;
 import com.aq.blogapp.utils.AppUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-
-
 
 
 @RestController
@@ -31,12 +29,12 @@ public class UserController {
     public ResponseEntity<Object> getAllUsers() {
         List<UserDTO> userDTOList = new ArrayList<>();
 
-        try{
+        try {
             userDTOList = userService.getAllUsers();
 
             return new ResponseEntity<>(userDTOList, HttpStatus.OK);
 
-        }catch (Exception ex){
+        } catch (Exception ex) {
 
             return new ResponseEntity<>(
                     new ApiResponse(
@@ -51,22 +49,22 @@ public class UserController {
 
 
     @GetMapping("/{userId}")
-    public ResponseEntity<Object> getUserById(@PathVariable Long userId){
+    public ResponseEntity<Object> getUserById(@PathVariable Long userId) {
         UserDTO userDTOById = new UserDTO();
 
-        try{
+        try {
             userDTOById = userService.getUserById(userId);
 
 //            System.out.println(userDTOById.toString());
 
-            return new ResponseEntity<>( userDTOById, HttpStatus.OK);
+            return new ResponseEntity<>(userDTOById, HttpStatus.OK);
 
-        } catch (Exception ex){
+        } catch (Exception ex) {
 
-            return  new ResponseEntity<>(
+            return new ResponseEntity<>(
                     new ApiResponse(
                             HttpStatus.NOT_FOUND.getReasonPhrase(),
-                            HttpStatus.NOT_FOUND.value() ),
+                            HttpStatus.NOT_FOUND.value()),
                     HttpStatus.NOT_FOUND
             );
         }
@@ -87,16 +85,15 @@ public class UserController {
 
 
     @PostMapping
-    public ResponseEntity<Object> createUser(@Valid @RequestBody UserDTO userDTO){
+    public ResponseEntity<Object> createUser(@Valid @RequestBody UserDTO userDTO) {
         UserDTO createdUserDTO = new UserDTO();
 
-        try{
-            if(!AppUtils.anyEmpty(userDTO)){
+        try {
+            if (!AppUtils.anyEmpty(userDTO)) {
                 createdUserDTO = userService.createUser(userDTO);
 
-                return  new ResponseEntity<>(createdUserDTO, HttpStatus.CREATED);
-            }
-            else {
+                return new ResponseEntity<>(createdUserDTO, HttpStatus.CREATED);
+            } else {
                 return new ResponseEntity<>(
                         new ApiResponse(
                                 HttpStatus.BAD_REQUEST.getReasonPhrase(),
@@ -105,28 +102,28 @@ public class UserController {
                 );
             }
 
-        }catch (Exception ex){
-             return new  ResponseEntity<>(
+        } catch (Exception ex) {
+            return new ResponseEntity<>(
                     new ApiResponse(
                             HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),
                             HttpStatus.INTERNAL_SERVER_ERROR.value()),
                     HttpStatus.INTERNAL_SERVER_ERROR
-             );
+            );
         }
     }
 
 
     @PutMapping("/{userId}")
-    public ResponseEntity<Object> updateUser(@PathVariable Long userId,@Valid @RequestBody UserDTO userDTO){
+    public ResponseEntity<Object> updateUser(@PathVariable Long userId, @Valid @RequestBody UserDTO userDTO) {
         UserDTO updatedUser = new UserDTO();
 
-        try{
+        try {
 
             updatedUser = userService.updateUser(userId, userDTO);
 
-            return new ResponseEntity<>( updatedUser, HttpStatus.OK);
+            return new ResponseEntity<>(updatedUser, HttpStatus.OK);
 
-        }catch (Exception ex){
+        } catch (Exception ex) {
             return new ResponseEntity<>(
                     new ApiResponse(
                             "Internal Server Error",
@@ -139,18 +136,18 @@ public class UserController {
 
 
     @DeleteMapping("/{userId}")
-    public ResponseEntity<Object> deleteUser(@PathVariable Long userId){
-        try{
+    public ResponseEntity<Object> deleteUser(@PathVariable Long userId) {
+        try {
             userService.deleteUser(userId);
 
             return new ResponseEntity<>(
-                     new ApiResponse(
-                             "User Deleted Successfully",
-                             HttpStatus.OK.value() ),
-                     HttpStatus.OK
+                    new ApiResponse(
+                            "User Deleted Successfully",
+                            HttpStatus.OK.value()),
+                    HttpStatus.OK
             );
 
-        }catch (Exception ex){
+        } catch (Exception ex) {
             return new ResponseEntity<>(
                     new ApiResponse(
                             HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),

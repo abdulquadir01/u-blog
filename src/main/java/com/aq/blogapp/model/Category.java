@@ -10,14 +10,11 @@ import java.util.List;
 import java.util.Objects;
 
 
-
-
-
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "categories")
 public class Category {

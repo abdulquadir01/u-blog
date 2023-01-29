@@ -8,9 +8,13 @@ import com.aq.blogapp.mappers.UserMapper;
 import com.aq.blogapp.model.Blog;
 import com.aq.blogapp.model.Category;
 import com.aq.blogapp.model.User;
+import com.aq.blogapp.payload.BlogResponse;
 import com.aq.blogapp.respositories.BlogRepository;
 import com.aq.blogapp.respositories.CategoryRepository;
 import com.aq.blogapp.respositories.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,7 +22,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
-
 
 
 @Service
@@ -40,31 +43,41 @@ public class BlogServiceImpl implements BlogService {
 
 
     @Override
-    public List<BlogDTO> getAllBlog() {
+    public BlogResponse getAllBlog(Integer pageNumber, Integer pageSize) {
+
         List<BlogDTO> blogDTOList = new ArrayList<>();
+        BlogResponse blogsByUserResponse = new BlogResponse();
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
 
-        blogDTOList = blogRepository
-                    .findAll()
-                    .stream()
-                    .map(blogMapper::blogToBlogDto)
-                    .collect(Collectors.toList());
+        Page<Blog> blogPage = blogRepository.findAll(pageable);
 
-        return blogDTOList;
+        blogDTOList = blogPage.getContent()
+                .stream()
+                .map(blogMapper::blogToBlogDto)
+                .collect(Collectors.toList());
+
+        blogsByUserResponse.setBlogs(blogDTOList);
+        blogsByUserResponse.setPageNumber(blogPage.getNumber());
+        blogsByUserResponse.setPageSize(blogPage.getSize());
+        blogsByUserResponse.setTotalPages(blogPage.getTotalPages());
+        blogsByUserResponse.setTotalElements(blogPage.getTotalElements());
+        blogsByUserResponse.setLastPage(blogPage.isLast());
+
+        return blogsByUserResponse;
     }
 
     @Override
     public BlogDTO getBlogById(Long id) {
         BlogDTO blogDTO = new BlogDTO();
 
-        try{
-            if(id !=null) {
+        try {
+            if (id != null) {
                 blogDTO = blogRepository
-                                .findById(id)
-                                .map(blogMapper::blogToBlogDto)
-                                .orElseThrow(() -> new ResourceNotFoundException("Blog", "BlogId", id));
+                        .findById(id)
+                        .map(blogMapper::blogToBlogDto)
+                        .orElseThrow(() -> new ResourceNotFoundException("Blog", "BlogId", id));
             }
-        }
-        catch (NoSuchElementException ex){
+        } catch (NoSuchElementException ex) {
             throw new ResourceNotFoundException("Blog", "BlogId", id);
         }
 
@@ -78,11 +91,11 @@ public class BlogServiceImpl implements BlogService {
         Blog newBlog = new Blog();
 
         User user = userRepository
-                        .findById(userId)
-                        .orElseThrow(()-> new ResourceNotFoundException("User", "userId", userId));
+                .findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "userId", userId));
         Category category = categoryRepository
-                                .findById(categoryId)
-                                .orElseThrow(()-> new ResourceNotFoundException("Category", "categoryId", categoryId));
+                .findById(categoryId)
+                .orElseThrow(() -> new ResourceNotFoundException("Category", "categoryId", categoryId));
 
         newBlog = blogMapper.blogDtoToBlog(blogDTO);
         newBlog.setImageName("default.png");
@@ -102,11 +115,11 @@ public class BlogServiceImpl implements BlogService {
         BlogDTO updatedBlog = new BlogDTO();
         Blog savedBlog = new Blog();
 
-        try{
+        try {
 
             Blog exitingBlog = blogRepository
-                                    .findById(id)
-                                    .orElseThrow( ()-> new ResourceNotFoundException("Blog", "blogId", id));
+                    .findById(id)
+                    .orElseThrow(() -> new ResourceNotFoundException("Blog", "blogId", id));
 
             exitingBlog.setTitle(blogDTO.getTitle());
             exitingBlog.setContent(blogDTO.getContent());
@@ -117,48 +130,73 @@ public class BlogServiceImpl implements BlogService {
             updatedBlog = blogMapper.blogToBlogDto(savedBlog);
 
 
-        }catch (Exception ex){
+        } catch (Exception ex) {
             throw new ResourceNotFoundException("Blog", "blogId", id);
         }
 
         return updatedBlog;
     }
 
+
     @Override
-    public List<BlogDTO> getBlogsByCategory(Long categoryId) {
-        List<BlogDTO> allBlogsByCategory = new ArrayList<>();
+    public BlogResponse getBlogsByCategory(Long categoryId, Integer pageNumber, Integer pageSize) {
+        List<BlogDTO> blogsByCategory = new ArrayList<>();
+        BlogResponse blogsByUserResponse = new BlogResponse();
+
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
 
         Category category = categoryRepository
-                                .findById(categoryId)
-                                .orElseThrow( ()-> new ResourceNotFoundException("Category", "categoryId", categoryId) );
+                .findById(categoryId)
+                .orElseThrow(() -> new ResourceNotFoundException("Category", "categoryId", categoryId));
 
-        allBlogsByCategory = blogRepository
-                                    .findAllByCategory(category)
-                                    .stream()
-                                    .map(blogMapper::blogToBlogDto)
-                                    .collect(Collectors.toList());
+        Page<Blog> blogPage = blogRepository.findAllByCategory(category, pageable);
 
-        return allBlogsByCategory;
+        blogsByCategory = blogPage.getContent()
+                .stream()
+                .map(blogMapper::blogToBlogDto)
+                .collect(Collectors.toList());
+
+        blogsByUserResponse.setBlogs(blogsByCategory);
+        blogsByUserResponse.setPageNumber(blogPage.getNumber());
+        blogsByUserResponse.setPageSize(blogPage.getSize());
+        blogsByUserResponse.setTotalPages(blogPage.getTotalPages());
+        blogsByUserResponse.setTotalElements(blogPage.getTotalElements());
+        blogsByUserResponse.setLastPage(blogPage.isLast());
+
+        return blogsByUserResponse;
     }
-
 
 
     @Override
-    public List<BlogDTO> getBlogsByUser(Long userId) {
-        List<BlogDTO> allBlogsByUser = new ArrayList<>();
+    public BlogResponse getBlogsByUser(Long userId, Integer pageNumber, Integer pageSize) {
+        List<BlogDTO> blogsByUser = new ArrayList<>();
+        BlogResponse blogsByUserResponse = new BlogResponse();
+
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
 
         User user = userRepository
-                        .findById(userId)
-                        .orElseThrow(()-> new ResourceNotFoundException("User", "userId", userId));
+                .findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "userId", userId));
 
-       allBlogsByUser = blogRepository
-                            .findAllByUser(user)
-                            .stream()
-                            .map(blogMapper::blogToBlogDto)
-                            .collect(Collectors.toList());
+        Page<Blog> blogPage = blogRepository
+                .findAllByUser(user, pageable);
 
-        return allBlogsByUser;
+        blogsByUser = blogPage
+                .getContent()
+                .stream()
+                .map(blogMapper::blogToBlogDto)
+                .collect(Collectors.toList());
+
+        blogsByUserResponse.setBlogs(blogsByUser);
+        blogsByUserResponse.setPageNumber(blogPage.getNumber());
+        blogsByUserResponse.setPageSize(blogPage.getSize());
+        blogsByUserResponse.setTotalPages(blogPage.getTotalPages());
+        blogsByUserResponse.setTotalElements(blogPage.getTotalElements());
+        blogsByUserResponse.setLastPage(blogPage.isLast());
+
+        return blogsByUserResponse;
     }
+
 
     @Override
     public void deleteBlog(Long id) {
@@ -166,9 +204,9 @@ public class BlogServiceImpl implements BlogService {
         UserDTO deletedUser = new UserDTO();
 
         deletedUser = userRepository
-                                .findById(id)
-                                .map(UserMapper.INSTANCE::userToUserDto)
-                                .orElseThrow( ()-> new ResourceNotFoundException("User", "userId", id) );
+                .findById(id)
+                .map(UserMapper.INSTANCE::userToUserDto)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "userId", id));
 
         blogRepository.deleteById(id);
 
@@ -178,4 +216,5 @@ public class BlogServiceImpl implements BlogService {
     public List<BlogDTO> searchBlogs(String keywords) {
         return null;
     }
+
 }

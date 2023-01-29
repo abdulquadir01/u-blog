@@ -30,12 +30,12 @@ public class CategoryController {
     public ResponseEntity<Object> getAllCategory() {
         List<CategoryDTO> categoryDTOList = new ArrayList<>();
 
-        try{
+        try {
             categoryDTOList = categoryService.getAllCategory();
 
             return new ResponseEntity<>(categoryDTOList, HttpStatus.OK);
 
-        }catch (Exception ex){
+        } catch (Exception ex) {
 
             return new ResponseEntity<>(
                     new ApiResponse(
@@ -49,21 +49,21 @@ public class CategoryController {
 
 
     @GetMapping("/{categoryId}")
-    public ResponseEntity<Object> getCategoryById(@PathVariable Long categoryId){
+    public ResponseEntity<Object> getCategoryById(@PathVariable Long categoryId) {
         CategoryDTO categoryDtoById = new CategoryDTO();
 
-        try{
+        try {
             categoryDtoById = categoryService.getCategoryById(categoryId);
             System.out.println(categoryDtoById.toString());
 
-            return new ResponseEntity<>( categoryDtoById, HttpStatus.OK);
+            return new ResponseEntity<>(categoryDtoById, HttpStatus.OK);
 
-        } catch (ResourceNotFoundException ex){
+        } catch (ResourceNotFoundException ex) {
 
-            return  new ResponseEntity<>(
+            return new ResponseEntity<>(
                     new ApiResponse(
                             HttpStatus.NOT_FOUND.getReasonPhrase(),
-                            HttpStatus.NOT_FOUND.value() ),
+                            HttpStatus.NOT_FOUND.value()),
                     HttpStatus.NOT_FOUND
             );
         }
@@ -72,16 +72,15 @@ public class CategoryController {
 
 
     @PostMapping
-    public ResponseEntity<Object> createUser(@Valid @RequestBody CategoryDTO categoryDTO){
+    public ResponseEntity<Object> createUser(@Valid @RequestBody CategoryDTO categoryDTO) {
         CategoryDTO createdCategoryDto = new CategoryDTO();
 
-        try{
-            if(!AppUtils.anyEmpty(categoryDTO)){
+        try {
+            if (!AppUtils.anyEmpty(categoryDTO)) {
                 createdCategoryDto = categoryService.createCategory(categoryDTO);
 
-                return  new ResponseEntity<>(createdCategoryDto, HttpStatus.CREATED);
-            }
-            else {
+                return new ResponseEntity<>(createdCategoryDto, HttpStatus.CREATED);
+            } else {
 
                 return new ResponseEntity<>(
                         new ApiResponse(
@@ -91,28 +90,28 @@ public class CategoryController {
                 );
             }
 
-        }catch (Exception ex){
+        } catch (Exception ex) {
 
-            return new  ResponseEntity<>(
+            return new ResponseEntity<>(
                     new ApiResponse(
                             HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),
                             HttpStatus.INTERNAL_SERVER_ERROR.value()),
                     HttpStatus.INTERNAL_SERVER_ERROR
-             );
+            );
         }
     }
 
 
     @PutMapping("/{categoryId}")
-    public ResponseEntity<Object> updateUser(@PathVariable Long categoryId,@Valid @RequestBody CategoryDTO categoryDTO){
+    public ResponseEntity<Object> updateUser(@PathVariable Long categoryId, @Valid @RequestBody CategoryDTO categoryDTO) {
         CategoryDTO updatedCategory = new CategoryDTO();
 
-        try{
+        try {
             updatedCategory = categoryService.updateCategory(categoryId, categoryDTO);
 
-            return new ResponseEntity<>( updatedCategory, HttpStatus.OK);
+            return new ResponseEntity<>(updatedCategory, HttpStatus.OK);
 
-        }catch (Exception ex){
+        } catch (Exception ex) {
 
             return new ResponseEntity<>(
                     new ApiResponse(
@@ -126,19 +125,19 @@ public class CategoryController {
 
 
     @DeleteMapping("/{categoryId}")
-    public ResponseEntity<Object> deleteUser(@PathVariable Long categoryId){
+    public ResponseEntity<Object> deleteUser(@PathVariable Long categoryId) {
 
-        try{
+        try {
             categoryService.deleteCategory(categoryId);
 
             return new ResponseEntity<>(
-                     new ApiResponse(
-                             "Category Deleted Successfully",
-                             HttpStatus.OK.value()),
-                     HttpStatus.OK
+                    new ApiResponse(
+                            "Category Deleted Successfully",
+                            HttpStatus.OK.value()),
+                    HttpStatus.OK
             );
 
-        }catch (Exception ex){
+        } catch (Exception ex) {
 
             return new ResponseEntity<>(
                     new ApiResponse(

@@ -10,12 +10,9 @@ import java.util.Date;
 import java.util.Objects;
 
 
-
-
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "blogs")
@@ -33,10 +30,10 @@ public class Blog {
     @Column(name = "blog_content", nullable = false, length = 4096)
     private String content;
 
-//    @Column(name = "blog_image", nullable = false, length = 128)
+    //    @Column(name = "blog_image", nullable = false, length = 128)
     private String imageName;
 
-//    @Column(name = "blogging_date",nullable = false, length = 128)
+    //    @Column(name = "blogging_date",nullable = false, length = 128)
     private Date bloggedDate;
 
     @ManyToOne

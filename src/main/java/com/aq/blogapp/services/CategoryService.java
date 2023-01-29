@@ -5,8 +5,6 @@ import com.aq.blogapp.DTO.CategoryDTO;
 import java.util.List;
 
 
-
-
 public interface CategoryService {
 
     List<CategoryDTO> getAllCategory();

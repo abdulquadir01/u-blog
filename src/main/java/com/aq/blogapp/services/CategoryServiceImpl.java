@@ -15,8 +15,6 @@ import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 
-
-
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
@@ -36,10 +34,10 @@ public class CategoryServiceImpl implements CategoryService {
         List<CategoryDTO> categoryDTOList = new ArrayList<>();
 
         categoryDTOList = categoryRepository
-                                .findAll()
-                                .stream()
-                                .map(categoryMapper::categoryToCategoryDto)
-                                .collect(Collectors.toList());
+                .findAll()
+                .stream()
+                .map(categoryMapper::categoryToCategoryDto)
+                .collect(Collectors.toList());
 
         return categoryDTOList;
     }
@@ -52,11 +50,11 @@ public class CategoryServiceImpl implements CategoryService {
         try {
             if (id != null) {
                 categoryDtoById = categoryRepository
-                                        .findById(id)
-                                        .map(categoryMapper::categoryToCategoryDto)
-                                        .orElseThrow( ()-> new ResourceNotFoundException("Category", "CategoryId", id));
+                        .findById(id)
+                        .map(categoryMapper::categoryToCategoryDto)
+                        .orElseThrow(() -> new ResourceNotFoundException("Category", "CategoryId", id));
             }
-        }catch (NoSuchElementException ex){
+        } catch (NoSuchElementException ex) {
             throw new ResourceNotFoundException("Category", "CategoryId", id);
         }
 
@@ -68,11 +66,11 @@ public class CategoryServiceImpl implements CategoryService {
     public CategoryDTO createCategory(CategoryDTO categoryDTO) {
         CategoryDTO newCategoryDTO = new CategoryDTO();
 
-        try{
+        try {
             if (!AppUtils.anyEmpty(categoryDTO)) {
                 newCategoryDTO = saveAndReturnDTO(categoryMapper.categoryDtoToCategory(categoryDTO));
             }
-        }catch (Exception ex){
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
             System.out.println(ex.getCause());
 
@@ -89,8 +87,8 @@ public class CategoryServiceImpl implements CategoryService {
 
         try {
             existingCategory = categoryRepository
-                                    .findById(id)
-                                    .orElseThrow(() -> new ResourceNotFoundException("Category", "CategoryId", id));
+                    .findById(id)
+                    .orElseThrow(() -> new ResourceNotFoundException("Category", "CategoryId", id));
 
             existingCategory.setCategoryTitle(categoryDTO.getCategoryTitle());
             existingCategory.setCategoryDescription(categoryDTO.getCategoryDescription());
@@ -110,9 +108,8 @@ public class CategoryServiceImpl implements CategoryService {
 
         try {
             categoryRepository.deleteById(id);
-        }
-        catch (EmptyResultDataAccessException ERDAE){
-            System.out.println( ERDAE.getMessage());
+        } catch (EmptyResultDataAccessException ERDAE) {
+            System.out.println(ERDAE.getMessage());
             System.out.println(ERDAE.getCause());
             throw new ResourceNotFoundException("Category", "CategoryId", id);
         }
