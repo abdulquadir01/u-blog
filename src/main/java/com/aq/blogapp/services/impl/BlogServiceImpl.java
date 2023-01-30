@@ -1,4 +1,4 @@
-package com.aq.blogapp.services;
+package com.aq.blogapp.services.impl;
 
 import com.aq.blogapp.DTO.BlogDTO;
 import com.aq.blogapp.DTO.UserDTO;
@@ -12,6 +12,7 @@ import com.aq.blogapp.payload.BlogResponse;
 import com.aq.blogapp.respositories.BlogRepository;
 import com.aq.blogapp.respositories.CategoryRepository;
 import com.aq.blogapp.respositories.UserRepository;
+import com.aq.blogapp.services.BlogService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -174,7 +175,7 @@ public class BlogServiceImpl implements BlogService {
 
     }
 
-
+//  TBD - improve the search() for a better search result.
     @Override
     public List<BlogDTO> searchByTitle(String keywords) {
         List<BlogDTO> searchedBlogs = new ArrayList<>();

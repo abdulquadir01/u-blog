@@ -1,16 +1,24 @@
 package com.aq.blogapp.controllers;
 
 import com.aq.blogapp.DTO.BlogDTO;
+import com.aq.blogapp.constants.AppConstants;
 import com.aq.blogapp.exceptions.ResourceNotFoundException;
 import com.aq.blogapp.payload.BlogResponse;
 import com.aq.blogapp.services.BlogService;
+import com.aq.blogapp.services.FileService;
 import com.aq.blogapp.utils.ApiResponse;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import javax.websocket.server.PathParam;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,18 +28,23 @@ import java.util.List;
 public class BlogController {
 
     private final BlogService blogService;
+    private final FileService fileService;
 
-    public BlogController(BlogService blogService) {
+    @Value("${project.image_path}")
+    private String imagePath;
+
+    public BlogController(BlogService blogService, FileService fileService) {
         this.blogService = blogService;
+        this.fileService = fileService;
     }
 
 
     @GetMapping("/blogs")
     public ResponseEntity<Object> getAllBlogs(
-            @RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
-            @RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize,
-            @RequestParam(value = "sortBy", defaultValue = "postId", required = false) String sortBy,
-            @RequestParam(value = "sortDir", defaultValue = "asc", required = false) String sortDir) {
+            @RequestParam(value = "pageNumber", defaultValue = AppConstants.PAGE_NUMBER, required = false) Integer pageNumber,
+            @RequestParam(value = "pageSize", defaultValue = AppConstants.PAGE_SIZE, required = false) Integer pageSize,
+            @RequestParam(value = "sortBy", defaultValue = AppConstants.SORT_BY, required = false) String sortBy,
+            @RequestParam(value = "sortDir", defaultValue = AppConstants.SORT_DIR, required = false) String sortDir ){
 
         BlogResponse blogResponse = new BlogResponse();
         System.out.println("sortdir :" + sortDir);
@@ -77,10 +90,10 @@ public class BlogController {
     @GetMapping("/category/{categoryId}/blogs")
     public ResponseEntity<Object> getBlogByCategory(
             @PathVariable Long categoryId,
-            @RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
-            @RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize,
-            @RequestParam(value = "sortBy", defaultValue = "postId", required = false) String sortBy,
-            @RequestParam(value = "sortDir", defaultValue = "asc", required = false) String sortDir) {
+            @RequestParam(value = "pageNumber", defaultValue = AppConstants.PAGE_NUMBER, required = false) Integer pageNumber,
+            @RequestParam(value = "pageSize", defaultValue = AppConstants.PAGE_SIZE, required = false) Integer pageSize,
+            @RequestParam(value = "sortBy", defaultValue = AppConstants.SORT_BY, required = false) String sortBy,
+            @RequestParam(value = "sortDir", defaultValue = AppConstants.SORT_DIR, required = false) String sortDir ){
 
         BlogResponse blogsByCategoryResponse = new BlogResponse();
 
@@ -104,10 +117,10 @@ public class BlogController {
     @GetMapping("/user/{userId}/blogs")
     public ResponseEntity<Object> getBlogByUser(
             @PathVariable Long userId,
-            @RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
-            @RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize,
-            @RequestParam(value = "sortBy", defaultValue = "postId", required = false) String sortBy,
-            @RequestParam(value = "sortDir", defaultValue = "asc", required = false) String sortDir) {
+            @RequestParam(value = "pageNumber", defaultValue = AppConstants.PAGE_NUMBER, required = false) Integer pageNumber,
+            @RequestParam(value = "pageSize", defaultValue = AppConstants.PAGE_SIZE, required = false) Integer pageSize,
+            @RequestParam(value = "sortBy", defaultValue = AppConstants.SORT_BY, required = false) String sortBy,
+            @RequestParam(value = "sortDir", defaultValue = AppConstants.SORT_DIR, required = false) String sortDir ){
 
         BlogResponse blogsByUser = new BlogResponse();
 
@@ -213,6 +226,39 @@ public class BlogController {
         searchedBlogs = blogService.searchByTitle(keyword);
 
         return new ResponseEntity<>(searchedBlogs, HttpStatus.OK);
+    }
+
+
+    @PostMapping("/blogs/{blogId}/images/upload")
+    public ResponseEntity<BlogDTO> uploadImg(@RequestParam("image") MultipartFile imageFile,
+                                            @PathVariable Long blogId ) throws IOException {
+
+        BlogDTO blogDTO = blogService.getBlogById(blogId);
+
+        System.out.println("uploadImg() k andar aa gaye");
+        String imageName = fileService.uploadImg(imagePath, imageFile);
+
+        blogDTO.setImageName(imageName);
+        System.out.println("imageName set ho gaya");
+
+        BlogDTO updatedBlog = blogService.updateBlog(blogId, blogDTO);
+        System.out.println("image save hoke naya blog bann gaya");
+
+        return  new ResponseEntity<>(updatedBlog, HttpStatus.OK);
+
+    }
+
+
+    @GetMapping(value = "/blogs/images/{imageName}", produces = MediaType.IMAGE_JPEG_VALUE)
+    public void downloadImg(@PathVariable String imageName, HttpServletResponse response) throws IOException{
+
+        System.out.println("inside downloadImg method: "+ imageName);
+        System.out.println("video file path: "+ imageName);
+
+        InputStream resource = fileService.getBlogImage(imagePath, imageName);
+        response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+        StreamUtils.copy(resource, response.getOutputStream());
+
     }
 
 

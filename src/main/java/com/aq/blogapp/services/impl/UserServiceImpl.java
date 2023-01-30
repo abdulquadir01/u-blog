@@ -1,10 +1,11 @@
-package com.aq.blogapp.services;
+package com.aq.blogapp.services.impl;
 
 import com.aq.blogapp.DTO.UserDTO;
 import com.aq.blogapp.exceptions.ResourceNotFoundException;
 import com.aq.blogapp.mappers.UserMapper;
 import com.aq.blogapp.model.User;
 import com.aq.blogapp.respositories.UserRepository;
+import com.aq.blogapp.services.UserService;
 import com.aq.blogapp.utils.AppUtils;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.aq.blogapp;
+package com.aq.blogapp.config;
 
 import com.aq.blogapp.model.Blog;
 import com.aq.blogapp.model.Category;
@@ -22,8 +22,8 @@ public class Bootstrap implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-//        loadUsers();
-//        loadCategories();
+        loadUsers();
+        loadCategories();
 //        loadBlogs();
     }
 
@@ -51,6 +51,7 @@ public class Bootstrap implements CommandLineRunner {
 
         System.out.println("Number of Categories in DB : " + categoryRepository.count());
     }
+
 
     private void loadUsers() {
 
@@ -80,4 +81,6 @@ public class Bootstrap implements CommandLineRunner {
 
         System.out.println("Number of Users in DB : " + userRepository.count());
     }
+
+
 }
