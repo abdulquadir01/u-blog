@@ -1,13 +1,14 @@
 package com.aq.blogapp.model;
 
-
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Getter
@@ -15,8 +16,8 @@ import java.util.Objects;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-public class User {
+@Entity(name = "users")
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
@@ -33,11 +34,24 @@ public class User {
     @Column(nullable = false, length = 64)
     private String password;
 
+    @Column(nullable = false, length = 4096)
     private String about;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @ToString.Exclude
     private List<Blog> blogs = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private Set<Comment> comments = new HashSet<>();
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JoinTable( name = "user_role",
+//            joinColumns  = @JoinColumn(name = "user", referencedColumnName = "userId"),
+//            inverseJoinColumns = @JoinColumn(name = "role", referencedColumnName = "roleId")
+//    )
+    private Set<Role> roles = new HashSet<>();
+
 
     @Override
     public boolean equals(Object o) {
@@ -50,5 +64,42 @@ public class User {
     @Override
     public int hashCode() {
         return getClass().hashCode();
+    }
+
+
+//  UserDetails
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+
+        List<GrantedAuthority> authorities = roles
+                                                .stream()
+                                                .map( role -> new SimpleGrantedAuthority(role.getRole()))
+                                                .collect(Collectors.toList());
+        return authorities;
+    }
+
+    @Override
+    public String getUsername() {
+        return null;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

@@ -15,8 +15,7 @@ import java.util.Objects;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "categories")
+@Entity(name = "categories")
 public class Category {
 
     @Id

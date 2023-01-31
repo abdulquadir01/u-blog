@@ -44,7 +44,7 @@ public class BlogController {
             @RequestParam(value = "pageNumber", defaultValue = AppConstants.PAGE_NUMBER, required = false) Integer pageNumber,
             @RequestParam(value = "pageSize", defaultValue = AppConstants.PAGE_SIZE, required = false) Integer pageSize,
             @RequestParam(value = "sortBy", defaultValue = AppConstants.SORT_BY, required = false) String sortBy,
-            @RequestParam(value = "sortDir", defaultValue = AppConstants.SORT_DIR, required = false) String sortDir ){
+            @RequestParam(value = "sortDir", defaultValue = AppConstants.SORT_DIR, required = false) String sortDir) {
 
         BlogResponse blogResponse = new BlogResponse();
         System.out.println("sortdir :" + sortDir);
@@ -93,7 +93,7 @@ public class BlogController {
             @RequestParam(value = "pageNumber", defaultValue = AppConstants.PAGE_NUMBER, required = false) Integer pageNumber,
             @RequestParam(value = "pageSize", defaultValue = AppConstants.PAGE_SIZE, required = false) Integer pageSize,
             @RequestParam(value = "sortBy", defaultValue = AppConstants.SORT_BY, required = false) String sortBy,
-            @RequestParam(value = "sortDir", defaultValue = AppConstants.SORT_DIR, required = false) String sortDir ){
+            @RequestParam(value = "sortDir", defaultValue = AppConstants.SORT_DIR, required = false) String sortDir) {
 
         BlogResponse blogsByCategoryResponse = new BlogResponse();
 
@@ -120,7 +120,7 @@ public class BlogController {
             @RequestParam(value = "pageNumber", defaultValue = AppConstants.PAGE_NUMBER, required = false) Integer pageNumber,
             @RequestParam(value = "pageSize", defaultValue = AppConstants.PAGE_SIZE, required = false) Integer pageSize,
             @RequestParam(value = "sortBy", defaultValue = AppConstants.SORT_BY, required = false) String sortBy,
-            @RequestParam(value = "sortDir", defaultValue = AppConstants.SORT_DIR, required = false) String sortDir ){
+            @RequestParam(value = "sortDir", defaultValue = AppConstants.SORT_DIR, required = false) String sortDir) {
 
         BlogResponse blogsByUser = new BlogResponse();
 
@@ -220,7 +220,7 @@ public class BlogController {
 
     //SEARCH METHOD
     @GetMapping("/blogs/search/{keyword}")
-    public ResponseEntity<Object> searchBlogs(@PathVariable String keyword){
+    public ResponseEntity<Object> searchBlogs(@PathVariable String keyword) {
         List<BlogDTO> searchedBlogs = new ArrayList<>();
 
         searchedBlogs = blogService.searchByTitle(keyword);
@@ -231,7 +231,7 @@ public class BlogController {
 
     @PostMapping("/blogs/{blogId}/images/upload")
     public ResponseEntity<BlogDTO> uploadImg(@RequestParam("image") MultipartFile imageFile,
-                                            @PathVariable Long blogId ) throws IOException {
+                                             @PathVariable Long blogId) throws IOException {
 
         BlogDTO blogDTO = blogService.getBlogById(blogId);
 
@@ -244,16 +244,16 @@ public class BlogController {
         BlogDTO updatedBlog = blogService.updateBlog(blogId, blogDTO);
         System.out.println("image save hoke naya blog bann gaya");
 
-        return  new ResponseEntity<>(updatedBlog, HttpStatus.OK);
+        return new ResponseEntity<>(updatedBlog, HttpStatus.OK);
 
     }
 
 
     @GetMapping(value = "/blogs/images/{imageName}", produces = MediaType.IMAGE_JPEG_VALUE)
-    public void downloadImg(@PathVariable String imageName, HttpServletResponse response) throws IOException{
+    public void downloadImg(@PathVariable String imageName, HttpServletResponse response) throws IOException {
 
-        System.out.println("inside downloadImg method: "+ imageName);
-        System.out.println("video file path: "+ imageName);
+        System.out.println("inside downloadImg method: " + imageName);
+        System.out.println("video file path: " + imageName);
 
         InputStream resource = fileService.getBlogImage(imagePath, imageName);
         response.setContentType(MediaType.IMAGE_JPEG_VALUE);

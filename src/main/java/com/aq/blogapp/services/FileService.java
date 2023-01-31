@@ -8,9 +8,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 
-
-
-
 public interface FileService {
 
     String uploadImg(String path, MultipartFile file) throws IOException;

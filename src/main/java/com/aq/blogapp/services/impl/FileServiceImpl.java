@@ -32,7 +32,7 @@ public class FileServiceImpl implements FileService {
 
 //        Create folder if not created
         File f = new File(imagePath);
-        if(!f.exists()){
+        if (!f.exists()) {
             f.mkdir();
         }
 
@@ -41,7 +41,6 @@ public class FileServiceImpl implements FileService {
 
         return newImageName;
     }
-
 
 
     @Override
