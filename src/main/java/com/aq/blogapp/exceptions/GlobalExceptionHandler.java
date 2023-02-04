@@ -1,6 +1,6 @@
 package com.aq.blogapp.exceptions;
 
-import com.aq.blogapp.utils.ApiResponse;
+import com.aq.blogapp.payload.response.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -36,4 +36,13 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<Map<String, String>>(exceptions, HttpStatus.BAD_REQUEST);
     }
+
+
+    @ExceptionHandler(LoginException.class)
+    public ResponseEntity<ApiResponse> loginExceptionHandler(LoginException ex) {
+        String msg = ex.getMessage();
+        ApiResponse apiResponse = new ApiResponse(msg, HttpStatus.BAD_REQUEST.value());
+        return new ResponseEntity<ApiResponse>(apiResponse, HttpStatus.BAD_REQUEST);
+    }
+
 }

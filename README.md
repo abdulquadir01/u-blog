@@ -26,7 +26,7 @@ That's all you need to get started tinkering with this application.
 - in your terminal, type the following command 
 <br>
 
-> mvn clean install 
+> ./mvnw clean install
 
 _it will download all the required dependencies and build the executable jar file of this application._
 

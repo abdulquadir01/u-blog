@@ -8,7 +8,7 @@ import com.aq.blogapp.mappers.UserMapper;
 import com.aq.blogapp.model.Blog;
 import com.aq.blogapp.model.Category;
 import com.aq.blogapp.model.User;
-import com.aq.blogapp.payload.BlogResponse;
+import com.aq.blogapp.payload.response.BlogResponse;
 import com.aq.blogapp.respositories.BlogRepository;
 import com.aq.blogapp.respositories.CategoryRepository;
 import com.aq.blogapp.respositories.UserRepository;
@@ -24,8 +24,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
-
-
 
 
 @Service
@@ -175,15 +173,15 @@ public class BlogServiceImpl implements BlogService {
 
     }
 
-//  TBD - improve the search() for a better search result.
+    //  TBD - improve the search() for a better search result.
     @Override
     public List<BlogDTO> searchByTitle(String keywords) {
         List<BlogDTO> searchedBlogs = new ArrayList<>();
 
         searchedBlogs = blogRepository
-                            .findByTitleContaining(keywords)
-                            .stream().map(blogMapper::blogToBlogDto)
-                            .collect(Collectors.toList());
+                .findByTitleContaining(keywords)
+                .stream().map(blogMapper::blogToBlogDto)
+                .collect(Collectors.toList());
 
         return searchedBlogs;
     }

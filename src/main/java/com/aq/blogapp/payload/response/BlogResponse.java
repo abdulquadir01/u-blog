@@ -1,4 +1,4 @@
-package com.aq.blogapp.payload;
+package com.aq.blogapp.payload.response;
 
 import com.aq.blogapp.DTO.BlogDTO;
 import lombok.Getter;

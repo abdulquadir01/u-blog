@@ -46,10 +46,10 @@ public class User implements UserDetails {
     private Set<Comment> comments = new HashSet<>();
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    @JoinTable( name = "user_role",
-//            joinColumns  = @JoinColumn(name = "user", referencedColumnName = "userId"),
-//            inverseJoinColumns = @JoinColumn(name = "role", referencedColumnName = "roleId")
-//    )
+    @JoinTable(name = "user_role",
+            joinColumns = @JoinColumn(name = "user", referencedColumnName = "userId"),
+            inverseJoinColumns = @JoinColumn(name = "roles", referencedColumnName = "roleId")
+    )
     private Set<Role> roles = new HashSet<>();
 
 
@@ -67,20 +67,20 @@ public class User implements UserDetails {
     }
 
 
-//  UserDetails
+    //  UserDetails
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
         List<GrantedAuthority> authorities = roles
-                                                .stream()
-                                                .map( role -> new SimpleGrantedAuthority(role.getRole()))
-                                                .collect(Collectors.toList());
+                .stream()
+                .map(role -> new SimpleGrantedAuthority(role.getRole()))
+                .collect(Collectors.toList());
         return authorities;
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return email;
     }
 
     @Override

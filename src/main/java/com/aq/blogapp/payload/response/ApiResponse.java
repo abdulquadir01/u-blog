@@ -1,4 +1,4 @@
-package com.aq.blogapp.utils;
+package com.aq.blogapp.payload.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

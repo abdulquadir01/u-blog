@@ -3,8 +3,8 @@ package com.aq.blogapp.controllers;
 
 import com.aq.blogapp.DTO.CategoryDTO;
 import com.aq.blogapp.exceptions.ResourceNotFoundException;
+import com.aq.blogapp.payload.response.ApiResponse;
 import com.aq.blogapp.services.CategoryService;
-import com.aq.blogapp.utils.ApiResponse;
 import com.aq.blogapp.utils.AppUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

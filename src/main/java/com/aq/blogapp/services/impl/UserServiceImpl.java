@@ -1,13 +1,17 @@
 package com.aq.blogapp.services.impl;
 
 import com.aq.blogapp.DTO.UserDTO;
+import com.aq.blogapp.constants.AppConstants;
 import com.aq.blogapp.exceptions.ResourceNotFoundException;
 import com.aq.blogapp.mappers.UserMapper;
+import com.aq.blogapp.model.Role;
 import com.aq.blogapp.model.User;
+import com.aq.blogapp.respositories.RoleRepository;
 import com.aq.blogapp.respositories.UserRepository;
 import com.aq.blogapp.services.UserService;
 import com.aq.blogapp.utils.AppUtils;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,10 +25,14 @@ public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final RoleRepository roleRepository;
 
-    public UserServiceImpl(UserMapper userMapper, UserRepository userRepository) {
+    public UserServiceImpl(UserMapper userMapper, UserRepository userRepository, PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
         this.userMapper = userMapper;
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.roleRepository = roleRepository;
     }
 
 
@@ -114,6 +122,25 @@ public class UserServiceImpl implements UserService {
     }
 
 
+    @Override
+    public UserDTO registerUser(UserDTO userDTO) {
+
+        User newUser = userMapper.userDtoToUser(userDTO);
+
+//      encoding the password
+        newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
+
+//        roles
+        Role role = roleRepository.findById(AppConstants.NORMAL_USER).get();
+        System.out.println("find role by id: " + role.toString());
+        newUser.getRoles().add(role);
+
+        User registeredUser = userRepository.save(newUser);
+
+        return userMapper.userToUserDto(registeredUser);
+    }
+
+
     //  PRIVATE methods
     private UserDTO saveAndReturnDTO(User user) {
         UserDTO returnedDto = new UserDTO();
@@ -126,4 +153,6 @@ public class UserServiceImpl implements UserService {
 
         return returnedDto;
     }
+
+
 }

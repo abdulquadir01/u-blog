@@ -2,11 +2,12 @@ package com.aq.blogapp.controllers;
 
 
 import com.aq.blogapp.DTO.UserDTO;
+import com.aq.blogapp.payload.response.ApiResponse;
 import com.aq.blogapp.services.UserService;
-import com.aq.blogapp.utils.ApiResponse;
 import com.aq.blogapp.utils.AppUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -50,14 +51,14 @@ public class UserController {
 
     @GetMapping("/{userId}")
     public ResponseEntity<Object> getUserById(@PathVariable Long userId) {
-        UserDTO userDTOById = new UserDTO();
+        UserDTO userDTO = new UserDTO();
 
         try {
-            userDTOById = userService.getUserById(userId);
+            userDTO = userService.getUserById(userId);
 
-//            System.out.println(userDTOById.toString());
+            System.out.println(userDTO.toString());
 
-            return new ResponseEntity<>(userDTOById, HttpStatus.OK);
+            return new ResponseEntity<>(userDTO, HttpStatus.OK);
 
         } catch (Exception ex) {
 
@@ -134,7 +135,7 @@ public class UserController {
 
     }
 
-
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{userId}")
     public ResponseEntity<Object> deleteUser(@PathVariable Long userId) {
         try {
