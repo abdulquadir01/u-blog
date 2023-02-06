@@ -1,4 +1,4 @@
-package com.aq.blogapp.security;
+package com.aq.blogapp.config.security;
 
 import com.aq.blogapp.exceptions.ResourceNotFoundException;
 import com.aq.blogapp.model.User;

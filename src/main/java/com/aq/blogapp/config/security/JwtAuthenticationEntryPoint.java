@@ -1,4 +1,4 @@
-package com.aq.blogapp.security;
+package com.aq.blogapp.config.security;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

@@ -1,9 +1,9 @@
 package com.aq.blogapp.services.impl;
 
-import com.aq.blogapp.DTO.UserDTO;
-import com.aq.blogapp.constants.AppConstants;
+import com.aq.blogapp.payload.DTO.UserDTO;
+import com.aq.blogapp.utils.constants.AppConstants;
 import com.aq.blogapp.exceptions.ResourceNotFoundException;
-import com.aq.blogapp.mappers.UserMapper;
+import com.aq.blogapp.utils.mappers.UserMapper;
 import com.aq.blogapp.model.Role;
 import com.aq.blogapp.model.User;
 import com.aq.blogapp.respositories.RoleRepository;
@@ -131,7 +131,7 @@ public class UserServiceImpl implements UserService {
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
 
 //        roles
-        Role role = roleRepository.findById(AppConstants.NORMAL_USER).get();
+        Role role = roleRepository.findById(AppConstants.ROLE_NORMAL_CODE).get();
         System.out.println("find role by id: " + role.toString());
         newUser.getRoles().add(role);
 

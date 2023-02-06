@@ -1,4 +1,4 @@
-package com.aq.blogapp.DTO;
+package com.aq.blogapp.payload.DTO;
 
 
 import lombok.Getter;

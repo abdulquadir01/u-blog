@@ -1,4 +1,4 @@
-package com.aq.blogapp.constants;
+package com.aq.blogapp.utils.constants;
 
 
 public class AppConstants {
@@ -16,8 +16,8 @@ public class AppConstants {
 
 
     //    Role constants
-    public static final Integer ADMIN_USER = 502;
-    public static final Integer NORMAL_USER = 501;
+    public static final Integer ROLE_ADMIN_CODE = 502;
+    public static final Integer ROLE_NORMAL_CODE = 501;
 
     public static final String ROLE_ADMIN_USER = "ADMIN_USER";
     public static final String ROLE_NORMAL_USER = "NORMAL_USER";

@@ -1,9 +1,9 @@
 package com.aq.blogapp.config;
 
 
-import com.aq.blogapp.security.CustomUserDetailService;
-import com.aq.blogapp.security.JwtAuthenticationEntryPoint;
-import com.aq.blogapp.security.JwtAuthenticationFilter;
+import com.aq.blogapp.config.security.CustomUserDetailService;
+import com.aq.blogapp.config.security.JwtAuthenticationEntryPoint;
+import com.aq.blogapp.config.security.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -17,17 +17,28 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableWebMvc
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    public static final String[] PUBLIC_URLS = {
+            "/api/auth/**",
+            "/v2/api-docs" ,
+            "/v3/api-docs",
+            "swagger-resources/**",
+            "/swagger-ui/**",
+            "/webjars/**"
+    };
+
 
     private final CustomUserDetailService userDetailService;
     private final JwtAuthenticationEntryPoint authEntryPoint;
     private final JwtAuthenticationFilter authFilter;
-
 
     public SecurityConfig(CustomUserDetailService userDetailService, JwtAuthenticationEntryPoint authEntryPoint, JwtAuthenticationFilter authFilter) {
         this.userDetailService = userDetailService;
@@ -41,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers("/api/auth/**").permitAll()
+                .antMatchers(PUBLIC_URLS).permitAll()
                 .antMatchers(HttpMethod.GET).permitAll()            //allow all GET request
                 .anyRequest()
                 .authenticated()

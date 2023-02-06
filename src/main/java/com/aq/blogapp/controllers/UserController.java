@@ -1,7 +1,7 @@
 package com.aq.blogapp.controllers;
 
 
-import com.aq.blogapp.DTO.UserDTO;
+import com.aq.blogapp.payload.DTO.UserDTO;
 import com.aq.blogapp.payload.response.ApiResponse;
 import com.aq.blogapp.services.UserService;
 import com.aq.blogapp.utils.AppUtils;

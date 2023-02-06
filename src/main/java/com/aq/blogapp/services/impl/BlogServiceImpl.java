@@ -1,10 +1,10 @@
 package com.aq.blogapp.services.impl;
 
-import com.aq.blogapp.DTO.BlogDTO;
-import com.aq.blogapp.DTO.UserDTO;
+import com.aq.blogapp.payload.DTO.BlogDTO;
+import com.aq.blogapp.payload.DTO.UserDTO;
 import com.aq.blogapp.exceptions.ResourceNotFoundException;
-import com.aq.blogapp.mappers.BlogMapper;
-import com.aq.blogapp.mappers.UserMapper;
+import com.aq.blogapp.utils.mappers.BlogMapper;
+import com.aq.blogapp.utils.mappers.UserMapper;
 import com.aq.blogapp.model.Blog;
 import com.aq.blogapp.model.Category;
 import com.aq.blogapp.model.User;

@@ -1,8 +1,8 @@
 package com.aq.blogapp.services.impl;
 
-import com.aq.blogapp.DTO.CommentDTO;
+import com.aq.blogapp.payload.DTO.CommentDTO;
 import com.aq.blogapp.exceptions.ResourceNotFoundException;
-import com.aq.blogapp.mappers.CommentMapper;
+import com.aq.blogapp.utils.mappers.CommentMapper;
 import com.aq.blogapp.model.Blog;
 import com.aq.blogapp.model.Comment;
 import com.aq.blogapp.respositories.BlogRepository;

@@ -1,8 +1,8 @@
 package com.aq.blogapp.services.impl;
 
-import com.aq.blogapp.DTO.CategoryDTO;
+import com.aq.blogapp.payload.DTO.CategoryDTO;
 import com.aq.blogapp.exceptions.ResourceNotFoundException;
-import com.aq.blogapp.mappers.CategoryMapper;
+import com.aq.blogapp.utils.mappers.CategoryMapper;
 import com.aq.blogapp.model.Category;
 import com.aq.blogapp.respositories.CategoryRepository;
 import com.aq.blogapp.services.CategoryService;

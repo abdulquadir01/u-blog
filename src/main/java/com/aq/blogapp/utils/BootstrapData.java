@@ -1,6 +1,6 @@
 package com.aq.blogapp.utils;
 
-import com.aq.blogapp.constants.AppConstants;
+import com.aq.blogapp.utils.constants.AppConstants;
 import com.aq.blogapp.model.Blog;
 import com.aq.blogapp.model.Category;
 import com.aq.blogapp.model.Role;
@@ -87,12 +87,12 @@ public class BootstrapData implements CommandLineRunner {
     private void loadUsers() {
 
         Role userNormal = new Role();
-        userNormal.setRoleId(AppConstants.NORMAL_USER);
-        userNormal.setRole("NORMAL_USER");
+        userNormal.setRoleId(AppConstants.ROLE_NORMAL_CODE);
+        userNormal.setRole("ROLE_NORMAL");
 
         Role userAdmin = new Role();
-        userAdmin.setRoleId(AppConstants.ADMIN_USER);
-        userAdmin.setRole("ADMIN_USER");
+        userAdmin.setRoleId(AppConstants.ROLE_ADMIN_CODE);
+        userAdmin.setRole("ROLE_ADMIN");
 
         User johnCena = this.johnCena;
         johnCena.setFirstName("Jhon");
@@ -226,12 +226,12 @@ public class BootstrapData implements CommandLineRunner {
         try {
 
             Role userNormal = new Role();
-            userNormal.setRoleId(AppConstants.NORMAL_USER);
-            userNormal.setRole("NORMAL_USER");
+            userNormal.setRoleId(AppConstants.ROLE_NORMAL_CODE);
+            userNormal.setRole("ROLE_NORMAL");
 
             Role userAdmin = new Role();
-            userAdmin.setRoleId(AppConstants.ADMIN_USER);
-            userAdmin.setRole("ADMIN_USER");
+            userAdmin.setRoleId(AppConstants.ROLE_ADMIN_CODE);
+            userAdmin.setRole("ROLE_ADMIN");
 
             List<Role> roles = List.of(userAdmin, userNormal);
 

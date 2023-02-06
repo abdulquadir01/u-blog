@@ -1,7 +1,7 @@
 package com.aq.blogapp.controllers;
 
 
-import com.aq.blogapp.DTO.CommentDTO;
+import com.aq.blogapp.payload.DTO.CommentDTO;
 import com.aq.blogapp.payload.response.ApiResponse;
 import com.aq.blogapp.services.CommentService;
 import org.springframework.http.HttpStatus;
