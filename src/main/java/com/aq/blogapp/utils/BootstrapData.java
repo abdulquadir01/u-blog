@@ -1,6 +1,6 @@
 package com.aq.blogapp.utils;
 
-import com.aq.blogapp.utils.constants.AppConstants;
+import com.aq.blogapp.constants.AppConstants;
 import com.aq.blogapp.model.Blog;
 import com.aq.blogapp.model.Category;
 import com.aq.blogapp.model.Role;

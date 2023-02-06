@@ -1,7 +1,7 @@
 package com.aq.blogapp.services.impl;
 
 import com.aq.blogapp.payload.DTO.UserDTO;
-import com.aq.blogapp.utils.constants.AppConstants;
+import com.aq.blogapp.constants.AppConstants;
 import com.aq.blogapp.exceptions.ResourceNotFoundException;
 import com.aq.blogapp.utils.mappers.UserMapper;
 import com.aq.blogapp.model.Role;

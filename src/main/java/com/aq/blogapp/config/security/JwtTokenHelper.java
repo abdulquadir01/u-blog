@@ -1,6 +1,6 @@
 package com.aq.blogapp.config.security;
 
-import com.aq.blogapp.utils.constants.AppConstants;
+import com.aq.blogapp.constants.AppConstants;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
