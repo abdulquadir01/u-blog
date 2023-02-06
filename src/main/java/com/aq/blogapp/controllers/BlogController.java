@@ -1,7 +1,7 @@
 package com.aq.blogapp.controllers;
 
 import com.aq.blogapp.payload.DTO.BlogDTO;
-import com.aq.blogapp.utils.constants.AppConstants;
+import com.aq.blogapp.constants.AppConstants;
 import com.aq.blogapp.exceptions.ResourceNotFoundException;
 import com.aq.blogapp.payload.response.ApiResponse;
 import com.aq.blogapp.payload.response.BlogResponse;
