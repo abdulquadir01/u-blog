@@ -1,9 +1,9 @@
 package com.aq.blogapp.services.impl;
 
-import com.aq.blogapp.DTO.UserDTO;
-import com.aq.blogapp.constants.AppConstants;
+import com.aq.blogapp.payload.DTO.UserDTO;
+import com.aq.blogapp.utils.constants.AppConstants;
 import com.aq.blogapp.exceptions.ResourceNotFoundException;
-import com.aq.blogapp.mappers.UserMapper;
+import com.aq.blogapp.utils.mappers.UserMapper;
 import com.aq.blogapp.model.Role;
 import com.aq.blogapp.model.User;
 import com.aq.blogapp.respositories.RoleRepository;
@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
+
+
 
 
 @Service

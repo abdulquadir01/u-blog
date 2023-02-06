@@ -1,6 +1,6 @@
 package com.aq.blogapp.services;
 
-import com.aq.blogapp.DTO.CommentDTO;
+import com.aq.blogapp.payload.DTO.CommentDTO;
 
 public interface CommentService {
 

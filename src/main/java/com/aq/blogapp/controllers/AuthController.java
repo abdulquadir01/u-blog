@@ -1,10 +1,10 @@
 package com.aq.blogapp.controllers;
 
-import com.aq.blogapp.DTO.UserDTO;
+import com.aq.blogapp.payload.DTO.UserDTO;
 import com.aq.blogapp.exceptions.LoginException;
 import com.aq.blogapp.payload.request.JwtAuthRequest;
 import com.aq.blogapp.payload.response.JwtAuthResponse;
-import com.aq.blogapp.security.JwtTokenHelper;
+import com.aq.blogapp.config.security.JwtTokenHelper;
 import com.aq.blogapp.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +34,7 @@ public class AuthController {
     }
 
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<JwtAuthResponse> createToken(@RequestBody JwtAuthRequest authRequest) throws Exception {
 
         authenticate(authRequest.getUsername(), authRequest.getPassword());

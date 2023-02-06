@@ -1,6 +1,6 @@
 package com.aq.blogapp.payload.response;
 
-import com.aq.blogapp.DTO.BlogDTO;
+import com.aq.blogapp.payload.DTO.BlogDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

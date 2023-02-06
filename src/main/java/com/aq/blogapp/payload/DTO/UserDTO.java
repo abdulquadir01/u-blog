@@ -1,4 +1,4 @@
-package com.aq.blogapp.DTO;
+package com.aq.blogapp.payload.DTO;
 
 
 import lombok.AllArgsConstructor;
@@ -11,6 +11,8 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
+
+
 
 
 @Data

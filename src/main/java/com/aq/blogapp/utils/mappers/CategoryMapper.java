@@ -1,6 +1,6 @@
-package com.aq.blogapp.mappers;
+package com.aq.blogapp.utils.mappers;
 
-import com.aq.blogapp.DTO.CategoryDTO;
+import com.aq.blogapp.payload.DTO.CategoryDTO;
 import com.aq.blogapp.model.Category;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

@@ -1,4 +1,6 @@
-package com.aq.blogapp.constants;
+package com.aq.blogapp.utils.constants;
+
+
 
 
 public class AppConstants {
