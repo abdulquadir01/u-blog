@@ -116,8 +116,8 @@ public class UserServiceImpl implements UserService {
         try {
             userRepository.deleteById(id);
         } catch (EmptyResultDataAccessException ERDAE) {
-            System.out.println(ERDAE.getMessage());
-            System.out.println(ERDAE.getCause());
+            ERDAE.getMessage();
+            ERDAE.getCause();
             throw new ResourceNotFoundException("User", "id", id);
         }
 
