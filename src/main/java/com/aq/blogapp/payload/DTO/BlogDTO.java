@@ -5,9 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.Set;
+
 
 
 @Data
@@ -31,7 +31,7 @@ public class BlogDTO {
 
     //    @NotEmpty
 //    @Size(min=4, message = "Provide date of blogging")
-    private Date bloggedDate;
+    private String bloggedDate;
 
 
     private CategoryDTO category;

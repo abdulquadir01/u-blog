@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api")
 public class CommentController {
@@ -32,6 +33,7 @@ public class CommentController {
         this.userService = userService;
         this.blogService = blogService;
     }
+
 
     @GetMapping("/comments")
     public ResponseEntity<Object> getAllComments(){

@@ -17,6 +17,7 @@ import java.util.List;
 
 
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -74,18 +75,6 @@ public class UserController {
 
     }
 
-//    @GetMapping("/{userId}")
-//    public ResponseEntity<Object> getById(@PathVariable Long userId){
-//        try{
-//            Object result = userRepository.findById(userId).get();
-//                return  new ResponseEntity<>(result, HttpStatus.OK);
-//          }catch (NoSuchElementException ex1){
-//            return  new ResponseEntity<>("Resource not found", HttpStatus.NOT_FOUND);
-//
-//          }catch(Exception ex){
-//              return  new ResponseEntity<>("Internal Server Error", HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
-
 
     @PostMapping
     public ResponseEntity<Object> createUser(@Valid @RequestBody UserDTO userDTO) {
@@ -137,6 +126,7 @@ public class UserController {
 
     }
 
+
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{userId}")
     public ResponseEntity<Object> deleteUser(@PathVariable Long userId) {
@@ -159,5 +149,6 @@ public class UserController {
             );
         }
     }
+
 
 }

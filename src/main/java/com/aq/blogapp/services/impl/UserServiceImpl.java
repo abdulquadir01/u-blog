@@ -73,6 +73,15 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
+    public UserDTO getUserByEmail(String email){
+        return userRepository
+                    .findByEmail(email)
+                    .map(userMapper::userToUserDto)
+                    .orElseThrow( ()-> new ResourceNotFoundException("email", email) );
+    }
+
+
+    @Override
     public UserDTO createUser(UserDTO userDTO) {
         UserDTO newUserDTO = new UserDTO();
 

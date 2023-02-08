@@ -19,8 +19,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -82,6 +83,12 @@ public class BlogServiceImpl implements BlogService {
         Blog createdBlog = new Blog();
         Blog newBlog = new Blog();
 
+        LocalDateTime localDateTime = LocalDateTime.now();
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        String formattedDate = localDateTime.format(dateTimeFormatter);
+        System.out.println("Formatted Date"+ formattedDate);
+
+
         User user = userRepository
                 .findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "userId", userId));
@@ -91,13 +98,14 @@ public class BlogServiceImpl implements BlogService {
 
         newBlog = blogMapper.blogDtoToBlog(blogDTO);
         newBlog.setImageName("default.png");
-        newBlog.setBloggedDate(new Date());
+        newBlog.setBloggedDate(formattedDate);
         newBlog.setUser(user);
         newBlog.setCategory(category);
 
         createdBlog = blogRepository.save(newBlog);
 
         newBlogDTO = blogMapper.blogToBlogDto(createdBlog);
+        System.out.println("new blogdto: "+newBlogDTO.toString());
 
         return newBlogDTO;
     }

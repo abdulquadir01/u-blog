@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/categories")
 public class CategoryController {
@@ -72,7 +73,7 @@ public class CategoryController {
 
 
     @PostMapping
-    public ResponseEntity<Object> createUser(@Valid @RequestBody CategoryDTO categoryDTO) {
+    public ResponseEntity<Object> createCategory(@Valid @RequestBody CategoryDTO categoryDTO) {
         CategoryDTO createdCategoryDto = new CategoryDTO();
 
         try {
@@ -103,7 +104,7 @@ public class CategoryController {
 
 
     @PutMapping("/{categoryId}")
-    public ResponseEntity<Object> updateUser(@PathVariable Long categoryId, @Valid @RequestBody CategoryDTO categoryDTO) {
+    public ResponseEntity<Object> updateCategory(@PathVariable Long categoryId, @Valid @RequestBody CategoryDTO categoryDTO) {
         CategoryDTO updatedCategory = new CategoryDTO();
 
         try {
@@ -125,7 +126,7 @@ public class CategoryController {
 
 
     @DeleteMapping("/{categoryId}")
-    public ResponseEntity<Object> deleteUser(@PathVariable Long categoryId) {
+    public ResponseEntity<Object> deleteCategory(@PathVariable Long categoryId) {
 
         try {
             categoryService.deleteCategory(categoryId);
