@@ -25,6 +25,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin
 public class BlogController {
 
     private final BlogService blogService;
@@ -224,6 +225,7 @@ public class BlogController {
         List<BlogDTO> searchedBlogs = new ArrayList<>();
 
         searchedBlogs = blogService.searchByTitle(keyword);
+        System.out.println("searched blog: \n"+searchedBlogs.toString());
 
         return new ResponseEntity<>(searchedBlogs, HttpStatus.OK);
     }

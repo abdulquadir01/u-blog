@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO getUserById(Long id) {
-        UserDTO userDTOById = null;
+        UserDTO userDTOById = new UserDTO();
 
         try {
             if (id != null) {
@@ -67,6 +67,24 @@ public class UserServiceImpl implements UserService {
         }
 
         return userDTOById;
+    }
+
+    @Override
+    public UserDTO getUserByEmail(String email) {
+        UserDTO userByEmail = new UserDTO();
+
+        try {
+            if (email != null) {
+                userByEmail = userRepository
+                        .findByEmail(email)
+                        .map(userMapper::userToUserDto)
+                        .orElseThrow(() -> new ResourceNotFoundException("User", email));
+            }
+        } catch (NoSuchElementException ex) {
+            throw new ResourceNotFoundException("User", email);
+        }
+
+        return userByEmail;
     }
 
 

@@ -6,8 +6,8 @@ import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import java.util.Date;
 import java.util.Objects;
+
 
 
 @Getter
@@ -34,7 +34,7 @@ public class Blog {
     private String imageName;
 
     //    @Column(name = "blogging_date",nullable = false, length = 128)
-    private Date bloggedDate;
+    private String bloggedDate;
 
     @ManyToOne
     @JoinColumn(name = "category_id")

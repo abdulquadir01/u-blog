@@ -5,11 +5,8 @@ public class AppConstants {
 
     public static final String PAGE_NUMBER = "0";
     public static final String PAGE_SIZE = "10";
-    public static final String SORT_BY = "sortBy";
+    public static final String SORT_BY = "blogId";
     public static final String SORT_DIR = "asc";
-
-//    public static final String PAGE_NUMBER = "0";
-//    public static final String PAGE_NUMBER = "0";
 
     //    JWT constants
     public static final Long JWT_TOKEN_VALIDITY = (long) (5 * 60 * 60);
