@@ -3,6 +3,8 @@ package com.aq.blogapp.utils;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -57,4 +59,13 @@ public class AppUtils {
 
         return obj;
     }
+
+
+
+    public static String dateFormatter(LocalDateTime localDateTime){
+//        LocalDateTime localDateTime = LocalDateTime.now();
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        return localDateTime.format(dateTimeFormatter);
+    }
+
 }

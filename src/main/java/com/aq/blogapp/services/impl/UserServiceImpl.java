@@ -1,16 +1,24 @@
 package com.aq.blogapp.services.impl;
 
-import com.aq.blogapp.payload.DTO.UserDTO;
 import com.aq.blogapp.constants.AppConstants;
 import com.aq.blogapp.exceptions.ResourceNotFoundException;
-import com.aq.blogapp.utils.mappers.UserMapper;
+import com.aq.blogapp.model.Blog;
 import com.aq.blogapp.model.Role;
 import com.aq.blogapp.model.User;
+import com.aq.blogapp.payload.DTO.BlogDTO;
+import com.aq.blogapp.payload.DTO.UserDTO;
+import com.aq.blogapp.payload.response.BlogsResponse;
+import com.aq.blogapp.payload.response.UsersResponse;
 import com.aq.blogapp.respositories.RoleRepository;
 import com.aq.blogapp.respositories.UserRepository;
 import com.aq.blogapp.services.UserService;
 import com.aq.blogapp.utils.AppUtils;
+import com.aq.blogapp.utils.mappers.UserMapper;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -37,17 +45,13 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public List<UserDTO> getAllUsers() {
+    public UsersResponse getAllUsers(Integer pageNumber, Integer pageSize, String sortBy, String sortDir) {
 
-        List<UserDTO> userDTOList = new ArrayList<>();
+        Pageable pageable = createSortedPageable(pageNumber, pageSize, sortBy, sortDir);
 
-        userDTOList = userRepository
-                .findAll()
-                .stream()
-                .map(userMapper::userToUserDto)
-                .collect(Collectors.toList());
+        Page<User> userPage = userRepository.findAll(pageable);
 
-        return userDTOList;
+        return createUserResponse(userPage);
     }
 
 
@@ -171,6 +175,67 @@ public class UserServiceImpl implements UserService {
 
         return returnedDto;
     }
+
+
+
+    //  ==================================================================
+//    PRIVATE METHODS
+
+    /**
+     * return the blogResponse class with proper properties.
+     * @param blogPage
+     * @return
+     */
+
+
+    private UsersResponse createUserResponse(Page<User> userPage) {
+
+        UsersResponse usersResponse = new UsersResponse();
+
+        List<UserDTO> users;
+        users = userPage
+                .getContent()
+                .stream()
+                .map(userMapper::userToUserDto)
+                .collect(Collectors.toList());
+
+        usersResponse.setUsers(users);
+        usersResponse.setPageNumber(userPage.getNumber());
+        usersResponse.setPageSize(userPage.getSize());
+        usersResponse.setTotalPages(userPage.getTotalPages());
+        usersResponse.setTotalElements(userPage.getTotalElements());
+        usersResponse.setLastPage(userPage.isLast());
+
+        return usersResponse;
+    }
+
+    /**
+     * this method return a sorted pageable
+     * @param pageNumber
+     * @param pageSize
+     * @param sortBy
+     * @param sortDir
+     * @return
+     */
+
+    private Pageable createSortedPageable(Integer pageNumber, Integer pageSize, String sortBy, String sortDir) {
+
+//      Be cautious of this statement
+//      !! CAUTION !! TBD - find a way to initialize sort with some other value than null
+        Sort sort = null;
+
+        if (sortDir.equalsIgnoreCase("asc")) {
+            sort = Sort.by(sortBy).ascending();
+        } else if (sortDir.equalsIgnoreCase("desc")) {
+            sort = Sort.by(sortBy).descending();
+        }
+
+//      !! CAUTION !! TBD - find a way to initialize sort with some other value than null
+        return PageRequest.of(pageNumber, pageSize, sort);
+    }
+
+
+//EoC - End of Class
 
 
 }

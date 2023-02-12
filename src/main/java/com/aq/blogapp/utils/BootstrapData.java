@@ -44,6 +44,8 @@ public class BootstrapData implements CommandLineRunner {
 //        loadBlogs();
 //        loadRoles();
 
+        System.out.println(AppUtils.dateFormatter(LocalDateTime.now()));
+
         System.out.println("User count in table users : " + userRepository.count());
         System.out.println("Blog count in table blogs : " + blogRepository.count());
         System.out.println("Category count in table categories : " + categoryRepository.count());
@@ -89,11 +91,11 @@ public class BootstrapData implements CommandLineRunner {
     private void loadUsers() {
 
         Role userNormal = new Role();
-        userNormal.setRoleId(AppConstants.ROLE_NORMAL_CODE);
+        userNormal.setRoleCode(AppConstants.ROLE_NORMAL_CODE);
         userNormal.setRole("ROLE_NORMAL");
 
         Role userAdmin = new Role();
-        userAdmin.setRoleId(AppConstants.ROLE_ADMIN_CODE);
+        userAdmin.setRoleCode(AppConstants.ROLE_ADMIN_CODE);
         userAdmin.setRole("ROLE_ADMIN");
 
         User johnCena = this.johnCena;
@@ -146,10 +148,14 @@ public class BootstrapData implements CommandLineRunner {
 
     private void loadBlogs() {
 
-        LocalDateTime localDateTime = LocalDateTime.now();
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-        String formattedDate = localDateTime.format(dateTimeFormatter);
+//        LocalDateTime localDateTime = LocalDateTime.now();
+//        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+//        String formattedDate = localDateTime.format(dateTimeFormatter);
+//
+        String formattedDate = AppUtils.dateFormatter(LocalDateTime.now());
         System.out.println("Formatted Date"+ formattedDate);
+
+
 
         Blog blog1 = new Blog();
         blog1.setTitle("Cricket U19 Champions");
@@ -247,11 +253,11 @@ public class BootstrapData implements CommandLineRunner {
         try {
 
             Role userNormal = new Role();
-            userNormal.setRoleId(AppConstants.ROLE_NORMAL_CODE);
+            userNormal.setRoleCode(AppConstants.ROLE_NORMAL_CODE);
             userNormal.setRole("ROLE_NORMAL");
 
             Role userAdmin = new Role();
-            userAdmin.setRoleId(AppConstants.ROLE_ADMIN_CODE);
+            userAdmin.setRoleCode(AppConstants.ROLE_ADMIN_CODE);
             userAdmin.setRole("ROLE_ADMIN");
 
             List<Role> roles = List.of(userAdmin, userNormal);

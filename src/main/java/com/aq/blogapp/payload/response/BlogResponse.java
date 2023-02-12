@@ -1,25 +1,36 @@
 package com.aq.blogapp.payload.response;
 
-import com.aq.blogapp.payload.DTO.BlogDTO;
-import lombok.Getter;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 
-@Getter
-@Setter
-@ToString
+
+
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class BlogResponse {
 
-    private List<BlogDTO> blogs;
-    private int pageNumber;
-    private int pageSize;
-    private int totalPages;
-    private Long totalElements;
-    private boolean lastPage;
+    private Long blogId;
+
+    private String title;
+
+    private String content;
+
+    private String imageName;
+
+    private String bloggedDate;
+
+    private CategoryResponse category;
+
+    private UserResponse user;
+
+    private Set<CommentResponse> comments = new LinkedHashSet<>();
+
 
 }
