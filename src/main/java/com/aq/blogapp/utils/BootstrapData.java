@@ -39,12 +39,15 @@ public class BootstrapData implements CommandLineRunner {
     }
 
 
+
     @Override
     public void run(String... args) throws Exception {
 //        loadUsers();
 //        loadCategories();
 //        loadBlogs();
 //        loadRoles();
+
+        System.out.println(AppUtils.dateFormatter(LocalDateTime.now()));
 
         System.out.println("User count in table users : " + userRepository.count());
         System.out.println("Blog count in table blogs : " + blogRepository.count());
@@ -200,7 +203,7 @@ public class BootstrapData implements CommandLineRunner {
 
         Blog blog6 = new Blog();
         blog6.setTitle("The OceanCleanUp3");
-        blog6.setContent("The CEO and the founder of the OceanCleanUp company has just unrevieled the final prototype of the OceanCleanUp3 system");
+        blog6.setContent("The CEO and the founder of the OceanCleanUp company has just revealed the final prototype of the OceanCleanUp3 system");
         blog6.setCategory(tech);
         blog6.setUser(deadPool);
         blog6.setBloggedDate(formattedDate);

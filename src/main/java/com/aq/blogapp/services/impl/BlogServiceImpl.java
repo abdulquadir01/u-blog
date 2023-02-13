@@ -174,11 +174,11 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public void deleteBlog(Long id) {
 
-        UserDTO deletedUser = new UserDTO();
+        BlogDTO deleteBlog = new BlogDTO();
 
-        deletedUser = userRepository
+        deleteBlog = blogRepository
                 .findById(id)
-                .map(UserMapper.INSTANCE::userToUserDto)
+                .map(BlogMapper.INSTANCE::blogToBlogDto)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "userId", id));
 
         blogRepository.deleteById(id);

@@ -6,13 +6,10 @@ import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import java.util.Objects;
+import java.util.*;
 
 
-
-@Getter
-@Setter
-@ToString
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "blogs")
@@ -44,16 +41,9 @@ public class Blog {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Blog blog = (Blog) o;
-        return blogId != null && Objects.equals(blogId, blog.blogId);
-    }
+    @OneToMany(mappedBy = "blog", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ToString.Exclude
+    private List<Comment> comments = new ArrayList<>();
 
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
+
 }

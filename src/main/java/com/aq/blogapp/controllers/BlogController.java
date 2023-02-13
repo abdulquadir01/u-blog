@@ -203,7 +203,7 @@ public class BlogController {
 
             return new ResponseEntity<>(
                     new ApiResponse(
-                            "Category Deleted Successfully",
+                            "Blog Deleted Successfully",
                             HttpStatus.OK.value()),
                     HttpStatus.OK
             );

@@ -11,7 +11,6 @@ import javax.persistence.*;
 
 
 
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -25,15 +24,19 @@ public class Comment {
 
     private String comment;
 
+    private String date;
+
+
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @ToString.Exclude
+//    @ToString.Exclude
     private User user;
 
 
     @ManyToOne
     @JoinColumn(name = "blog_id")
-    @ToString.Exclude
+//    @ToString.Exclude
     private Blog blog;
+
 
 }

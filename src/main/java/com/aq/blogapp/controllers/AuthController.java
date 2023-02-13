@@ -17,9 +17,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
 
-
-
-@CrossOrigin
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -46,11 +43,11 @@ public class AuthController {
 
         String generatedToken = tokenHelper.tokenGenerator(userDetails);
 
-        UserDTO user = userService.getUserByEmail(authRequest.getUsername());
+        Long userId = userService.getUserByEmail(authRequest.getUsername()).getUserId();
 
         JwtAuthResponse response = new JwtAuthResponse();
         response.setToken(generatedToken);
-        response.setUserId(user.getUserId());
+        response.setUserId(userId);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
