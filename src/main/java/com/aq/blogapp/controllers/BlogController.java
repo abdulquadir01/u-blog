@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api")
 @CrossOrigin
@@ -203,7 +204,7 @@ public class BlogController {
 
             return new ResponseEntity<>(
                     new ApiResponse(
-                            "Category Deleted Successfully",
+                            "Blog Deleted Successfully",
                             HttpStatus.OK.value()),
                     HttpStatus.OK
             );

@@ -1,5 +1,5 @@
 # Blog App
-<hr>
+
 
 ### Blogging app built using SpringBoot & React
 

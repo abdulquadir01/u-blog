@@ -6,7 +6,7 @@
 
 ### TBD :pushpin:
 
-#### v1.x.x+
+#### v1.x.x
 - :heavy_check_mark: add/remove image(s) for a blog
 - :heavy_check_mark: comment on a blog
 - :white_check_mark: like on a blog
@@ -19,7 +19,7 @@
 - :white_check_mark: deploying to a cloud
 - :recycle: Add features ( Hey! any suggestions if you're reading this :smiley: )
 
-#### v1.1.x+
+#### v1.1.x
 - :x: add CI/CD pipeline
 - :x: deploying through CI/CD pipeline 
 - improve the role management
@@ -28,7 +28,7 @@
 - :white_check_mark: unit testing (test-passed, code-coverage badge)
 
 
-#### v1.3.x+
+#### v1.3.x
 - :x: migrate to NoSQL DB
 - :x: make the backend reactive (*optional*)
 

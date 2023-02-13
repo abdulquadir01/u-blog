@@ -1,18 +1,18 @@
 package com.aq.blogapp.services.impl;
 
+import com.aq.blogapp.payload.DTO.BlogDTO;
+import com.aq.blogapp.payload.DTO.UserDTO;
 import com.aq.blogapp.exceptions.ResourceNotFoundException;
+import com.aq.blogapp.utils.mappers.BlogMapper;
+import com.aq.blogapp.utils.mappers.UserMapper;
 import com.aq.blogapp.model.Blog;
 import com.aq.blogapp.model.Category;
 import com.aq.blogapp.model.User;
-import com.aq.blogapp.payload.DTO.BlogDTO;
-import com.aq.blogapp.payload.DTO.UserDTO;
-import com.aq.blogapp.payload.response.BlogsResponse;
+import com.aq.blogapp.payload.response.BlogResponse;
 import com.aq.blogapp.respositories.BlogRepository;
 import com.aq.blogapp.respositories.CategoryRepository;
 import com.aq.blogapp.respositories.UserRepository;
 import com.aq.blogapp.services.BlogService;
-import com.aq.blogapp.utils.mappers.BlogMapper;
-import com.aq.blogapp.utils.mappers.UserMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +25,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
+
+
+
 
 
 @Service
@@ -46,7 +49,7 @@ public class BlogServiceImpl implements BlogService {
 
 
     @Override
-    public BlogsResponse getAllBlog(Integer pageNumber, Integer pageSize, String sortBy, String sortDir) {
+    public BlogResponse getAllBlog(Integer pageNumber, Integer pageSize, String sortBy, String sortDir) {
 
         Pageable pageable = createSortedPageable(pageNumber, pageSize, sortBy, sortDir);
 
@@ -72,6 +75,7 @@ public class BlogServiceImpl implements BlogService {
 
         return blogDTO;
     }
+
 
     @Override
     public BlogDTO createBlog(BlogDTO blogDTO, Long userId, Long categoryId) {
@@ -135,8 +139,8 @@ public class BlogServiceImpl implements BlogService {
 
 
     @Override
-    public BlogsResponse getBlogsByCategory(Long categoryId, Integer pageNumber, Integer pageSize,
-                                            String sortBy, String sortDir) {
+    public BlogResponse getBlogsByCategory(Long categoryId, Integer pageNumber, Integer pageSize,
+                                           String sortBy, String sortDir) {
 
         Pageable pageable = createSortedPageable(pageNumber, pageSize, sortBy, sortDir);
 
@@ -151,8 +155,8 @@ public class BlogServiceImpl implements BlogService {
 
 
     @Override
-    public BlogsResponse getBlogsByUser(Long userId, Integer pageNumber, Integer pageSize,
-                                        String sortBy, String sortDir) {
+    public BlogResponse getBlogsByUser(Long userId, Integer pageNumber, Integer pageSize,
+                                       String sortBy, String sortDir) {
 
         Pageable pageable = createSortedPageable(pageNumber, pageSize, sortBy, sortDir);
 
@@ -170,11 +174,11 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public void deleteBlog(Long id) {
 
-        UserDTO deletedUser = new UserDTO();
+        BlogDTO deleteBlog = new BlogDTO();
 
-        deletedUser = userRepository
+        deleteBlog = blogRepository
                 .findById(id)
-                .map(UserMapper.INSTANCE::userToUserDto)
+                .map(BlogMapper.INSTANCE::blogToBlogDto)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "userId", id));
 
         blogRepository.deleteById(id);
@@ -197,17 +201,9 @@ public class BlogServiceImpl implements BlogService {
 
     //  ==================================================================
 //    PRIVATE METHODS
+    private BlogResponse createBlogResponse(Page<Blog> blogPage) {
 
-    /**
-     * return the blogResponse class with proper properties.
-     * @param blogPage
-     * @return
-     */
-
-
-    private BlogsResponse createBlogResponse(Page<Blog> blogPage) {
-
-        BlogsResponse blogResponse = new BlogsResponse();
+        BlogResponse blogResponse = new BlogResponse();
 
         List<BlogDTO> blogs;
         blogs = blogPage
@@ -226,14 +222,6 @@ public class BlogServiceImpl implements BlogService {
         return blogResponse;
     }
 
-    /**
-     * this method return a sorted page
-     * @param pageNumber
-     * @param pageSize
-     * @param sortBy
-     * @param sortDir
-     * @return
-     */
 
     private Pageable createSortedPageable(Integer pageNumber, Integer pageSize, String sortBy, String sortDir) {
 

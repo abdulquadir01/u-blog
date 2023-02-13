@@ -1,7 +1,6 @@
 package com.aq.blogapp.services;
 
 import com.aq.blogapp.payload.DTO.UserDTO;
-import com.aq.blogapp.payload.response.UsersResponse;
 
 import java.util.List;
 
@@ -11,7 +10,7 @@ public interface UserService {
 
     UserDTO registerUser(UserDTO user);
 
-   UsersResponse getAllUsers(Integer pageNumber, Integer pageSize, String sortBy, String sortDir);
+    List<UserDTO> getAllUsers();
 
     UserDTO getUserById(Long id);
 

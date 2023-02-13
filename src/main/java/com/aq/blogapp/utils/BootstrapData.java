@@ -18,6 +18,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 
+
+
 @Component
 public class BootstrapData implements CommandLineRunner {
 
@@ -35,6 +37,7 @@ public class BootstrapData implements CommandLineRunner {
         this.roleRepository = roleRepository;
         this.pwdEncoder = pwdEncoder;
     }
+
 
 
     @Override
@@ -91,12 +94,14 @@ public class BootstrapData implements CommandLineRunner {
     private void loadUsers() {
 
         Role userNormal = new Role();
-        userNormal.setRoleCode(AppConstants.ROLE_NORMAL_CODE);
-        userNormal.setRole("ROLE_NORMAL");
+        userNormal.setRoleId(AppConstants.NORMAL_USER);
+        userNormal.setRole("NORMAL_USER");
+
 
         Role userAdmin = new Role();
-        userAdmin.setRoleCode(AppConstants.ROLE_ADMIN_CODE);
-        userAdmin.setRole("ROLE_ADMIN");
+        userAdmin.setRoleId(AppConstants.ADMIN_USER);
+        userAdmin.setRole("ADMIN_USER");
+
 
         User johnCena = this.johnCena;
         johnCena.setFirstName("Jhon");
@@ -106,6 +111,7 @@ public class BootstrapData implements CommandLineRunner {
         johnCena.setAbout("This guy is a wrestler & an actor.");
         johnCena.getRoles().add(userNormal);
 
+
         User johnDoe = this.johnDoe;
         johnDoe.setFirstName("Jhon");
         johnDoe.setLastName("Doe");
@@ -113,6 +119,7 @@ public class BootstrapData implements CommandLineRunner {
         johnDoe.setPassword(pwdEncoder.encode("p@ssW0rd"));
         johnDoe.setAbout("This guy is a Cyber-security Professional");
         johnDoe.getRoles().add(userNormal);
+
 
         User johnWick = this.johnWick;
         johnWick.setFirstName("Jhon");
@@ -148,13 +155,10 @@ public class BootstrapData implements CommandLineRunner {
 
     private void loadBlogs() {
 
-//        LocalDateTime localDateTime = LocalDateTime.now();
-//        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-//        String formattedDate = localDateTime.format(dateTimeFormatter);
-//
-        String formattedDate = AppUtils.dateFormatter(LocalDateTime.now());
-        System.out.println("Formatted Date"+ formattedDate);
-
+        LocalDateTime localDateTime = LocalDateTime.now();
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        String formattedDate = localDateTime.format(dateTimeFormatter);
+        System.out.println("Formatted Date: "+ formattedDate);
 
 
         Blog blog1 = new Blog();
@@ -172,12 +176,14 @@ public class BootstrapData implements CommandLineRunner {
         blog2.setUser(johnDoe);
         blog2.setBloggedDate(formattedDate);
 
+
         Blog blog3 = new Blog();
         blog3.setTitle("Pathan");
         blog3.setContent("SRK's awaited movie Pathan has been release on 16th of Jan,2023 and is has broke all the previous day one Box Office collection records");
         blog3.setCategory(movies);
         blog3.setUser(byomukesh);
         blog3.setBloggedDate(formattedDate);
+
 
         Blog blog4 = new Blog();
         blog4.setTitle("Ronaldo, there is still a fight");
@@ -186,6 +192,7 @@ public class BootstrapData implements CommandLineRunner {
         blog4.setUser(johnCena);
         blog4.setBloggedDate(formattedDate);
 
+
         Blog blog5 = new Blog();
         blog5.setTitle("The OceanCleanUp3");
         blog5.setContent("The first month of 2023 has ended with a bang with India winning the ICC U19 Women Cricket World Cup.");
@@ -193,12 +200,14 @@ public class BootstrapData implements CommandLineRunner {
         blog5.setUser(byomukesh);
         blog5.setBloggedDate(formattedDate);
 
+
         Blog blog6 = new Blog();
         blog6.setTitle("The OceanCleanUp3");
-        blog6.setContent("The CEO and the founder of the OceanCleanUp company has just unrevieled the final prototype of the OceanCleanUp3 system");
+        blog6.setContent("The CEO and the founder of the OceanCleanUp company has just revealed the final prototype of the OceanCleanUp3 system");
         blog6.setCategory(tech);
         blog6.setUser(deadPool);
         blog6.setBloggedDate(formattedDate);
+
 
         Blog blog7 = new Blog();
         blog7.setTitle("Avatar 2, 13 years in making");
@@ -207,12 +216,14 @@ public class BootstrapData implements CommandLineRunner {
         blog7.setUser(johnWick);
         blog7.setBloggedDate(formattedDate);
 
+
         Blog blog8 = new Blog();
         blog8.setTitle("Volleyball");
         blog8.setContent("Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.");
         blog8.setCategory(sports);
         blog8.setUser(johnCena);
         blog8.setBloggedDate(formattedDate);
+
 
         Blog blog9 = new Blog();
         blog9.setTitle("Hundai & the future of ICE");
@@ -221,6 +232,7 @@ public class BootstrapData implements CommandLineRunner {
         blog9.setUser(byomukesh);
         blog9.setBloggedDate(formattedDate);
 
+
         Blog blog10 = new Blog();
         blog10.setTitle("Wakanda2");
         blog10.setContent("Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.");
@@ -228,12 +240,14 @@ public class BootstrapData implements CommandLineRunner {
         blog10.setUser(johnCena);
         blog10.setBloggedDate(formattedDate);
 
+
         Blog blog11 = new Blog();
         blog11.setTitle("The Two Sons");
         blog11.setContent("Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.");
         blog11.setCategory(novels);
         blog11.setUser(byomukesh);
         blog11.setBloggedDate(formattedDate);
+
 
         Blog blog12 = new Blog();
         blog12.setTitle("The Green Book");
@@ -251,25 +265,24 @@ public class BootstrapData implements CommandLineRunner {
     private void loadRoles() {
 
         try {
-
             Role userNormal = new Role();
-            userNormal.setRoleCode(AppConstants.ROLE_NORMAL_CODE);
-            userNormal.setRole("ROLE_NORMAL");
+            userNormal.setRoleId(AppConstants.NORMAL_USER);
+            userNormal.setRole("NORMAL_USER");
 
             Role userAdmin = new Role();
-            userAdmin.setRoleCode(AppConstants.ROLE_ADMIN_CODE);
-            userAdmin.setRole("ROLE_ADMIN");
+            userAdmin.setRoleId(AppConstants.ADMIN_USER);
+            userAdmin.setRole("ADMIN_USER");
 
             List<Role> roles = List.of(userAdmin, userNormal);
 
             List<Role> result = roleRepository.saveAll(roles);
 
-            System.out.println("Saved Roles");
             result.forEach(r -> System.out.println(r.getRole()));
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
+
 
 
 }

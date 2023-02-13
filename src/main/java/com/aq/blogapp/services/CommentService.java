@@ -16,11 +16,11 @@ public interface CommentService {
 
     CommentDTO getCommentById(Long id);
 
-//    List<CommentDTO> getCommentByUser(User user);
+    List<CommentDTO> getCommentByUser(User user);
 
     List<CommentDTO> getCommentByBlog(Blog blog);
 
-//    List<CommentDTO> getCommentByUserOnBlog(User user, Blog blog);
+    List<CommentDTO> getCommentByUserOnBlog(User user, Blog blog);
 
     CommentDTO updateComment(Long id, CommentDTO commentDTO);
 

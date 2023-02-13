@@ -1,14 +1,14 @@
 package com.aq.blogapp.services;
 
 import com.aq.blogapp.payload.DTO.BlogDTO;
-import com.aq.blogapp.payload.response.BlogsResponse;
+import com.aq.blogapp.payload.response.BlogResponse;
 
 import java.util.List;
 
 
 public interface BlogService {
 
-    BlogsResponse getAllBlog(Integer pageNumber, Integer pageSize, String sortBy, String sortDir);
+    BlogResponse getAllBlog(Integer pageNumber, Integer pageSize, String sortBy, String sortDir);
 
     BlogDTO getBlogById(Long id);
 
@@ -18,9 +18,9 @@ public interface BlogService {
 
     void deleteBlog(Long id);
 
-    BlogsResponse getBlogsByCategory(Long categoryId, Integer pageNumber, Integer pageSize, String sortBy, String sortDir);
+    BlogResponse getBlogsByCategory(Long categoryId, Integer pageNumber, Integer pageSize, String sortBy, String sortDir);
 
-    BlogsResponse getBlogsByUser(Long userId, Integer pageNumber, Integer pageSize, String sortBy, String sortDir);
+    BlogResponse getBlogsByUser(Long userId, Integer pageNumber, Integer pageSize, String sortBy, String sortDir);
 
     //    search for posts
     List<BlogDTO> searchByTitle(String keywords);

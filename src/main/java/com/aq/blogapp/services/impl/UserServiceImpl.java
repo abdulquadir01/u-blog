@@ -1,24 +1,16 @@
 package com.aq.blogapp.services.impl;
 
+import com.aq.blogapp.payload.DTO.UserDTO;
 import com.aq.blogapp.constants.AppConstants;
 import com.aq.blogapp.exceptions.ResourceNotFoundException;
-import com.aq.blogapp.model.Blog;
+import com.aq.blogapp.utils.mappers.UserMapper;
 import com.aq.blogapp.model.Role;
 import com.aq.blogapp.model.User;
-import com.aq.blogapp.payload.DTO.BlogDTO;
-import com.aq.blogapp.payload.DTO.UserDTO;
-import com.aq.blogapp.payload.response.BlogsResponse;
-import com.aq.blogapp.payload.response.UsersResponse;
 import com.aq.blogapp.respositories.RoleRepository;
 import com.aq.blogapp.respositories.UserRepository;
 import com.aq.blogapp.services.UserService;
 import com.aq.blogapp.utils.AppUtils;
-import com.aq.blogapp.utils.mappers.UserMapper;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
+
+
 
 
 @Service
@@ -45,19 +39,23 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public UsersResponse getAllUsers(Integer pageNumber, Integer pageSize, String sortBy, String sortDir) {
+    public List<UserDTO> getAllUsers() {
 
-        Pageable pageable = createSortedPageable(pageNumber, pageSize, sortBy, sortDir);
+        List<UserDTO> userDTOList = new ArrayList<>();
 
-        Page<User> userPage = userRepository.findAll(pageable);
+        userDTOList = userRepository
+                .findAll()
+                .stream()
+                .map(userMapper::userToUserDto)
+                .collect(Collectors.toList());
 
-        return createUserResponse(userPage);
+        return userDTOList;
     }
 
 
     @Override
     public UserDTO getUserById(Long id) {
-        UserDTO userDTOById = new UserDTO();
+        UserDTO userDTOById = null;
 
         try {
             if (id != null) {
@@ -73,22 +71,13 @@ public class UserServiceImpl implements UserService {
         return userDTOById;
     }
 
+
     @Override
-    public UserDTO getUserByEmail(String email) {
-        UserDTO userByEmail = new UserDTO();
-
-        try {
-            if (email != null) {
-                userByEmail = userRepository
-                        .findByEmail(email)
-                        .map(userMapper::userToUserDto)
-                        .orElseThrow(() -> new ResourceNotFoundException("User", email));
-            }
-        } catch (NoSuchElementException ex) {
-            throw new ResourceNotFoundException("User", email);
-        }
-
-        return userByEmail;
+    public UserDTO getUserByEmail(String email){
+        return userRepository
+                    .findByEmail(email)
+                    .map(userMapper::userToUserDto)
+                    .orElseThrow( ()-> new ResourceNotFoundException("email", email) );
     }
 
 
@@ -136,8 +125,8 @@ public class UserServiceImpl implements UserService {
         try {
             userRepository.deleteById(id);
         } catch (EmptyResultDataAccessException ERDAE) {
-            System.out.println(ERDAE.getMessage());
-            System.out.println(ERDAE.getCause());
+            ERDAE.getMessage();
+            ERDAE.getCause();
             throw new ResourceNotFoundException("User", "id", id);
         }
 
@@ -153,7 +142,7 @@ public class UserServiceImpl implements UserService {
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
 
 //        roles
-        Role role = roleRepository.findById(AppConstants.ROLE_NORMAL_CODE).get();
+        Role role = roleRepository.findById(AppConstants.NORMAL_USER).get();
         System.out.println("find role by id: " + role.toString());
         newUser.getRoles().add(role);
 
@@ -175,67 +164,6 @@ public class UserServiceImpl implements UserService {
 
         return returnedDto;
     }
-
-
-
-    //  ==================================================================
-//    PRIVATE METHODS
-
-    /**
-     * return the blogResponse class with proper properties.
-     * @param blogPage
-     * @return
-     */
-
-
-    private UsersResponse createUserResponse(Page<User> userPage) {
-
-        UsersResponse usersResponse = new UsersResponse();
-
-        List<UserDTO> users;
-        users = userPage
-                .getContent()
-                .stream()
-                .map(userMapper::userToUserDto)
-                .collect(Collectors.toList());
-
-        usersResponse.setUsers(users);
-        usersResponse.setPageNumber(userPage.getNumber());
-        usersResponse.setPageSize(userPage.getSize());
-        usersResponse.setTotalPages(userPage.getTotalPages());
-        usersResponse.setTotalElements(userPage.getTotalElements());
-        usersResponse.setLastPage(userPage.isLast());
-
-        return usersResponse;
-    }
-
-    /**
-     * this method return a sorted pageable
-     * @param pageNumber
-     * @param pageSize
-     * @param sortBy
-     * @param sortDir
-     * @return
-     */
-
-    private Pageable createSortedPageable(Integer pageNumber, Integer pageSize, String sortBy, String sortDir) {
-
-//      Be cautious of this statement
-//      !! CAUTION !! TBD - find a way to initialize sort with some other value than null
-        Sort sort = null;
-
-        if (sortDir.equalsIgnoreCase("asc")) {
-            sort = Sort.by(sortBy).ascending();
-        } else if (sortDir.equalsIgnoreCase("desc")) {
-            sort = Sort.by(sortBy).descending();
-        }
-
-//      !! CAUTION !! TBD - find a way to initialize sort with some other value than null
-        return PageRequest.of(pageNumber, pageSize, sort);
-    }
-
-
-//EoC - End of Class
 
 
 }

@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -16,7 +17,7 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 
 //    Page<Comment> findAllByCategory(Category category, Pageable pageable);
 
-//    Page<Comment> findAllByUser(Comment comment, Pageable pageable);
+    Page<Comment> findAllByUser(Comment comment, Pageable pageable);
 
     List<Comment> findAllByUser(User user);
 
@@ -24,5 +25,5 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     List<Comment> findAllByUserAndBlog(User user, Blog blog);
 
-    List<CommentDTO> findByCommentContaining(String title);
+//    List<Comment> findByTitleContaining(String title);
 }

@@ -1,6 +1,8 @@
 package com.aq.blogapp.constants;
 
 
+
+
 public class AppConstants {
 
     public static final String PAGE_NUMBER = "0";
