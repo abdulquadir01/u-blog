@@ -1,6 +1,6 @@
 package com.aq.blogapp.services;
 
-import com.aq.blogapp.payload.DTO.UserDTO;
+import com.aq.blogapp.vo.DTO.UserDTO;
 
 import java.util.List;
 

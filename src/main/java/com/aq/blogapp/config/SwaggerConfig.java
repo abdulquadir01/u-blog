@@ -15,8 +15,6 @@ import java.util.Collections;
 import java.util.List;
 
 
-
-
 @Configuration
 @EnableSwagger2
 @EnableWebMvc
@@ -64,7 +62,5 @@ public class SwaggerConfig {
                 "licence URL", Collections.emptyList()
         );
     }
-
-
 
 }

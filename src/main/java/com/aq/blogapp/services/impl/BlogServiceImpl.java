@@ -1,18 +1,17 @@
 package com.aq.blogapp.services.impl;
 
-import com.aq.blogapp.payload.DTO.BlogDTO;
-import com.aq.blogapp.payload.DTO.UserDTO;
+import com.aq.blogapp.vo.DTO.BlogDTO;
 import com.aq.blogapp.exceptions.ResourceNotFoundException;
 import com.aq.blogapp.utils.mappers.BlogMapper;
-import com.aq.blogapp.utils.mappers.UserMapper;
 import com.aq.blogapp.model.Blog;
 import com.aq.blogapp.model.Category;
 import com.aq.blogapp.model.User;
-import com.aq.blogapp.payload.response.BlogResponse;
+import com.aq.blogapp.vo.response.BlogResponse;
 import com.aq.blogapp.respositories.BlogRepository;
 import com.aq.blogapp.respositories.CategoryRepository;
 import com.aq.blogapp.respositories.UserRepository;
 import com.aq.blogapp.services.BlogService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -26,11 +25,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
-
-
-
-
 @Service
+@RequiredArgsConstructor
 public class BlogServiceImpl implements BlogService {
 
     private final BlogRepository blogRepository;
@@ -39,13 +35,17 @@ public class BlogServiceImpl implements BlogService {
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
 
-    public BlogServiceImpl(BlogRepository blogRepository, BlogMapper blogMapper,
-                           UserRepository userRepository, CategoryRepository categoryRepository) {
-        this.blogRepository = blogRepository;
-        this.blogMapper = blogMapper;
-        this.userRepository = userRepository;
-        this.categoryRepository = categoryRepository;
-    }
+//    public BlogServiceImpl(
+//            BlogRepository blogRepository,
+//            BlogMapper blogMapper,
+//            UserRepository userRepository,
+//            CategoryRepository categoryRepository
+//    ) {
+//        this.blogRepository = blogRepository;
+//        this.blogMapper = blogMapper;
+//        this.userRepository = userRepository;
+//        this.categoryRepository = categoryRepository;
+//    }
 
 
     @Override

@@ -1,6 +1,5 @@
 package com.aq.blogapp.model;
 
-
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -10,11 +9,10 @@ import java.util.List;
 import java.util.Objects;
 
 
-@Getter
-@Setter
-@ToString
-@NoArgsConstructor
+@Data
+@Builder
 @AllArgsConstructor
+@RequiredArgsConstructor
 @Entity(name = "categories")
 public class Category {
 

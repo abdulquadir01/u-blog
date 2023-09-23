@@ -11,13 +11,10 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 
-
-
-@Getter
-@Setter
-@ToString
-@NoArgsConstructor
+@Data
+@Builder
 @AllArgsConstructor
+@RequiredArgsConstructor
 @Entity(name = "users")
 public class User implements UserDetails {
     @Id

@@ -1,11 +1,12 @@
 package com.aq.blogapp.controllers;
 
 
-import com.aq.blogapp.payload.DTO.CategoryDTO;
+import com.aq.blogapp.vo.DTO.CategoryDTO;
 import com.aq.blogapp.exceptions.ResourceNotFoundException;
-import com.aq.blogapp.payload.response.ApiResponse;
+import com.aq.blogapp.vo.response.ApiResponse;
 import com.aq.blogapp.services.CategoryService;
 import com.aq.blogapp.utils.AppUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,18 +15,17 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @CrossOrigin
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/categories")
-@CrossOrigin
 public class CategoryController {
 
     private final CategoryService categoryService;
 
-    public CategoryController(CategoryService categoryService) {
-        this.categoryService = categoryService;
-    }
+//    public CategoryController(CategoryService categoryService) {
+//        this.categoryService = categoryService;
+//    }
 
 
     @GetMapping

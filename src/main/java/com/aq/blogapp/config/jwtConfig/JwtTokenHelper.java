@@ -1,4 +1,4 @@
-package com.aq.blogapp.config.security;
+package com.aq.blogapp.config.jwtConfig;
 
 import com.aq.blogapp.constants.AppConstants;
 import io.jsonwebtoken.Claims;

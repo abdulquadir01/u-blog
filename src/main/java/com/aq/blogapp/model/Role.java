@@ -1,9 +1,6 @@
 package com.aq.blogapp.model;
 
-
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,10 +8,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 
-
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
+@Builder
+@AllArgsConstructor
+@RequiredArgsConstructor
 @Entity(name = "roles")
 public class Role {
 

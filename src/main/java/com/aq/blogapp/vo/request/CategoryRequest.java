@@ -1,9 +1,16 @@
-package com.aq.blogapp.payload.request;
+package com.aq.blogapp.vo.request;
 
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+@Data
+@Builder
 public class CategoryRequest {
 
     @NotEmpty

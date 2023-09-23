@@ -1,20 +1,16 @@
 package com.aq.blogapp.model;
 
-
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
 
 
 
-@Getter
-@Setter
-@NoArgsConstructor
-@ToString
+@Data
+@Builder
+@AllArgsConstructor
+@RequiredArgsConstructor
 @Entity(name = "comments")
 public class Comment {
 
@@ -26,7 +22,6 @@ public class Comment {
 
     private String date;
 
-
     @ManyToOne
     @JoinColumn(name = "user_id")
 //    @ToString.Exclude
@@ -37,6 +32,5 @@ public class Comment {
     @JoinColumn(name = "blog_id")
 //    @ToString.Exclude
     private Blog blog;
-
 
 }

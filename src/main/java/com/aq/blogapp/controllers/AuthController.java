@@ -1,11 +1,12 @@
 package com.aq.blogapp.controllers;
 
-import com.aq.blogapp.payload.DTO.UserDTO;
+import com.aq.blogapp.vo.DTO.UserDTO;
 import com.aq.blogapp.exceptions.LoginException;
-import com.aq.blogapp.payload.request.JwtAuthRequest;
-import com.aq.blogapp.payload.response.JwtAuthResponse;
-import com.aq.blogapp.config.security.JwtTokenHelper;
+import com.aq.blogapp.vo.request.JwtAuthRequest;
+import com.aq.blogapp.vo.response.JwtAuthResponse;
+import com.aq.blogapp.config.jwtConfig.JwtTokenHelper;
 import com.aq.blogapp.services.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,9 +18,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
 
-@RestController
-@RequestMapping("/api/auth")
 @CrossOrigin
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/api/auth")
 public class AuthController {
 
     private final JwtTokenHelper tokenHelper;
@@ -27,12 +29,12 @@ public class AuthController {
     private final AuthenticationManager authManager;
     private final UserService userService;
 
-    public AuthController(JwtTokenHelper tokenHelper, UserDetailsService userDetailsService, AuthenticationManager authManager, UserService userService) {
-        this.tokenHelper = tokenHelper;
-        this.userDetailsService = userDetailsService;
-        this.authManager = authManager;
-        this.userService = userService;
-    }
+//    public AuthController(JwtTokenHelper tokenHelper, UserDetailsService userDetailsService, AuthenticationManager authManager, UserService userService) {
+//        this.tokenHelper = tokenHelper;
+//        this.userDetailsService = userDetailsService;
+//        this.authManager = authManager;
+//        this.userService = userService;
+//    }
 
 
     @PostMapping("/login")

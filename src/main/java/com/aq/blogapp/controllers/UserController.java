@@ -1,10 +1,10 @@
 package com.aq.blogapp.controllers;
 
-
-import com.aq.blogapp.payload.DTO.UserDTO;
-import com.aq.blogapp.payload.response.ApiResponse;
+import com.aq.blogapp.vo.DTO.UserDTO;
+import com.aq.blogapp.vo.response.ApiResponse;
 import com.aq.blogapp.services.UserService;
 import com.aq.blogapp.utils.AppUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,19 +15,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
-
 @CrossOrigin
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/users")
-@CrossOrigin
 public class UserController {
 
     private final UserService userService;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
+//    public UserController(UserService userService) {
+//        this.userService = userService;
+//    }
 
 
     @GetMapping

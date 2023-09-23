@@ -1,12 +1,13 @@
 package com.aq.blogapp.services.impl;
 
-import com.aq.blogapp.payload.DTO.CategoryDTO;
+import com.aq.blogapp.vo.DTO.CategoryDTO;
 import com.aq.blogapp.exceptions.ResourceNotFoundException;
 import com.aq.blogapp.utils.mappers.CategoryMapper;
 import com.aq.blogapp.model.Category;
 import com.aq.blogapp.respositories.CategoryRepository;
 import com.aq.blogapp.services.CategoryService;
 import com.aq.blogapp.utils.AppUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
@@ -17,16 +18,19 @@ import java.util.stream.Collectors;
 
 
 @Service
+@RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
-
 
     private final CategoryMapper categoryMapper;
     private final CategoryRepository categoryRepository;
 
-    public CategoryServiceImpl(CategoryMapper categoryMapper, CategoryRepository categoryRepository) {
-        this.categoryMapper = categoryMapper;
-        this.categoryRepository = categoryRepository;
-    }
+//    public CategoryServiceImpl(
+//            CategoryMapper categoryMapper,
+//            CategoryRepository categoryRepository
+//    ){
+//        this.categoryMapper = categoryMapper;
+//        this.categoryRepository = categoryRepository;
+//    }
 
 
     @Override

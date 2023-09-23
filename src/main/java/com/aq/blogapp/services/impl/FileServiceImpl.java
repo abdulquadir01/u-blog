@@ -1,6 +1,7 @@
 package com.aq.blogapp.services.impl;
 
 import com.aq.blogapp.services.FileService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,8 +13,8 @@ import java.util.UUID;
 
 
 @Service
+@RequiredArgsConstructor
 public class FileServiceImpl implements FileService {
-
 
     @Override
     public String uploadImg(String imagePath, MultipartFile imageFile) throws IOException {

@@ -1,18 +1,14 @@
-package com.aq.blogapp.payload.response;
+package com.aq.blogapp.vo.response;
 
-import com.aq.blogapp.payload.DTO.BlogDTO;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import com.aq.blogapp.vo.DTO.BlogDTO;
+import lombok.*;
 
 import java.util.List;
 
-
-@Getter
-@Setter
-@ToString
-@NoArgsConstructor
+@Data
+@Builder
+@AllArgsConstructor
+@RequiredArgsConstructor
 public class BlogsResponse {
 
     private List<BlogDTO> blogs;

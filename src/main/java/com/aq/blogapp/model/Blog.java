@@ -1,6 +1,5 @@
 package com.aq.blogapp.model;
 
-
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -10,8 +9,9 @@ import java.util.*;
 
 
 @Data
-@NoArgsConstructor
+@Builder
 @AllArgsConstructor
+@RequiredArgsConstructor
 @Entity(name = "blogs")
 public class Blog {
 
@@ -27,10 +27,10 @@ public class Blog {
     @Column(name = "blog_content", nullable = false, length = 4096)
     private String content;
 
-    //    @Column(name = "blog_image", nullable = false, length = 128)
+    @Column(name = "blog_image", nullable = false, length = 128)
     private String imageName;
 
-    //    @Column(name = "blogging_date",nullable = false, length = 128)
+    @Column(name = "blogging_date",nullable = false, length = 128)
     private String bloggedDate;
 
     @ManyToOne

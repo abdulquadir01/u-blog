@@ -1,6 +1,6 @@
 package com.aq.blogapp.services.impl;
 
-import com.aq.blogapp.payload.DTO.UserDTO;
+import com.aq.blogapp.vo.DTO.UserDTO;
 import com.aq.blogapp.constants.AppConstants;
 import com.aq.blogapp.exceptions.ResourceNotFoundException;
 import com.aq.blogapp.utils.mappers.UserMapper;
@@ -10,6 +10,7 @@ import com.aq.blogapp.respositories.RoleRepository;
 import com.aq.blogapp.respositories.UserRepository;
 import com.aq.blogapp.services.UserService;
 import com.aq.blogapp.utils.AppUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,8 +22,8 @@ import java.util.stream.Collectors;
 
 
 
-
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
@@ -30,12 +31,17 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
 
-    public UserServiceImpl(UserMapper userMapper, UserRepository userRepository, PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
-        this.userMapper = userMapper;
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.roleRepository = roleRepository;
-    }
+//    public UserServiceImpl(
+//            UserMapper userMapper,
+//            UserRepository userRepository,
+//            PasswordEncoder passwordEncoder,
+//            RoleRepository roleRepository
+//    ){
+//        this.userMapper = userMapper;
+//        this.userRepository = userRepository;
+//        this.passwordEncoder = passwordEncoder;
+//        this.roleRepository = roleRepository;
+//    }
 
 
     @Override
@@ -142,7 +148,7 @@ public class UserServiceImpl implements UserService {
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
 
 //        roles
-        Role role = roleRepository.findById(AppConstants.NORMAL_USER).get();
+        Role role = roleRepository.findById(AppConstants.ROLE_NORMAL_CODE).get();
         System.out.println("find role by id: " + role.toString());
         newUser.getRoles().add(role);
 

@@ -3,12 +3,10 @@ package com.aq.blogapp.respositories;
 import com.aq.blogapp.model.Blog;
 import com.aq.blogapp.model.Comment;
 import com.aq.blogapp.model.User;
-import com.aq.blogapp.payload.DTO.CommentDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Arrays;
 import java.util.List;
 
 

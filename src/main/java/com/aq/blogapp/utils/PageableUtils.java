@@ -4,9 +4,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
-
-
-
 public class PageableUtils {
 
     public static  Pageable createSortedPageable(Integer pageNumber, Integer pageSize, String sortBy, String sortDir) {

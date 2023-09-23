@@ -1,7 +1,7 @@
 package com.aq.blogapp.services.impl;
 
 import com.aq.blogapp.model.User;
-import com.aq.blogapp.payload.DTO.CommentDTO;
+import com.aq.blogapp.vo.DTO.CommentDTO;
 import com.aq.blogapp.exceptions.ResourceNotFoundException;
 import com.aq.blogapp.utils.AppUtils;
 import com.aq.blogapp.utils.mappers.CommentMapper;
@@ -10,6 +10,7 @@ import com.aq.blogapp.model.Comment;
 import com.aq.blogapp.respositories.BlogRepository;
 import com.aq.blogapp.respositories.CommentRepository;
 import com.aq.blogapp.services.CommentService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -21,17 +22,22 @@ import java.util.stream.Collectors;
 
 
 @Service
+@RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
 
     private final BlogRepository blogRepository;
     private final CommentRepository commentRepository;
     private final CommentMapper commentMapper;
 
-    public CommentServiceImpl(BlogRepository blogRepository, CommentRepository commentRepository, CommentMapper commentMapper) {
-        this.blogRepository = blogRepository;
-        this.commentRepository = commentRepository;
-        this.commentMapper = commentMapper;
-    }
+//    public CommentServiceImpl(
+//            BlogRepository blogRepository,
+//            CommentRepository commentRepository,
+//            CommentMapper commentMapper
+//    ){
+//        this.blogRepository = blogRepository;
+//        this.commentRepository = commentRepository;
+//        this.commentMapper = commentMapper;
+//    }
 
 
     @Override

@@ -1,18 +1,12 @@
-package com.aq.blogapp.payload.DTO;
+package com.aq.blogapp.vo.DTO;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.util.LinkedHashSet;
-import java.util.Set;
-
-
+import lombok.*;
 
 @Data
-@NoArgsConstructor
+@Builder
 @AllArgsConstructor
+@RequiredArgsConstructor
 public class BlogDTO {
 
     private Long blogId;

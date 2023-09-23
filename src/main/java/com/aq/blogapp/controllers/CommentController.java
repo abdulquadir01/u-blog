@@ -1,15 +1,15 @@
 package com.aq.blogapp.controllers;
 
-
 import com.aq.blogapp.model.Blog;
 import com.aq.blogapp.model.User;
-import com.aq.blogapp.payload.DTO.CommentDTO;
-import com.aq.blogapp.payload.response.ApiResponse;
+import com.aq.blogapp.vo.DTO.CommentDTO;
+import com.aq.blogapp.vo.response.ApiResponse;
 import com.aq.blogapp.services.BlogService;
 import com.aq.blogapp.services.CommentService;
 import com.aq.blogapp.services.UserService;
 import com.aq.blogapp.utils.mappers.BlogMapper;
 import com.aq.blogapp.utils.mappers.UserMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +19,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api")
 public class CommentController {
 
@@ -28,12 +29,11 @@ public class CommentController {
 
     private final BlogService blogService;
 
-    public CommentController(CommentService commentService, UserService userService, BlogService blogService) {
-        this.commentService = commentService;
-        this.userService = userService;
-        this.blogService = blogService;
-    }
-
+//    public CommentController(CommentService commentService, UserService userService, BlogService blogService) {
+//        this.commentService = commentService;
+//        this.userService = userService;
+//        this.blogService = blogService;
+//    }
 
     @GetMapping("/comments")
     public ResponseEntity<Object> getAllComments(){

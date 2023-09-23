@@ -1,17 +1,16 @@
-package com.aq.blogapp.payload.DTO;
+package com.aq.blogapp.vo.DTO;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 
 @Data
-@NoArgsConstructor
+@Builder
 @AllArgsConstructor
+@RequiredArgsConstructor
 public class CategoryDTO {
 
     private Long categoryId;

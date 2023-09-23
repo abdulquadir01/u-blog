@@ -1,7 +1,8 @@
-package com.aq.blogapp.config.security;
+package com.aq.blogapp.config.jwtConfig;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,20 +19,26 @@ import java.io.IOException;
 
 
 @Component
+@RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final UserDetailsService userDetailsService;
     private final JwtTokenHelper tokenHelper;
 
-    public JwtAuthenticationFilter(UserDetailsService userDetailsService, JwtTokenHelper tokenHelper) {
-        this.userDetailsService = userDetailsService;
-        this.tokenHelper = tokenHelper;
-    }
-
+//    public JwtAuthenticationFilter(
+//            UserDetailsService userDetailsService,
+//            JwtTokenHelper tokenHelper
+//    ){
+//        this.userDetailsService = userDetailsService;
+//        this.tokenHelper = tokenHelper;
+//    }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
-                                    FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            FilterChain filterChain
+    ) throws ServletException, IOException {
 
 //        1. get token
         String requestToken = request.getHeader("Authorization");
@@ -46,7 +53,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             token = requestToken.substring(7);
             System.out.println("originalToken: \n " + token);
-
 
             try {
                 username = tokenHelper.getUsernameFromToken(token);

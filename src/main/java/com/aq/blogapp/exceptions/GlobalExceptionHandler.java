@@ -1,6 +1,6 @@
 package com.aq.blogapp.exceptions;
 
-import com.aq.blogapp.payload.response.ApiResponse;
+import com.aq.blogapp.vo.response.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;

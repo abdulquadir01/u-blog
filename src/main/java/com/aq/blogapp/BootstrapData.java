@@ -1,4 +1,4 @@
-package com.aq.blogapp.utils;
+package com.aq.blogapp;
 
 import com.aq.blogapp.constants.AppConstants;
 import com.aq.blogapp.model.Blog;
@@ -9,6 +9,7 @@ import com.aq.blogapp.respositories.BlogRepository;
 import com.aq.blogapp.respositories.CategoryRepository;
 import com.aq.blogapp.respositories.RoleRepository;
 import com.aq.blogapp.respositories.UserRepository;
+import com.aq.blogapp.utils.AppUtils;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -16,8 +17,6 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-
-
 
 
 @Component
@@ -39,13 +38,12 @@ public class BootstrapData implements CommandLineRunner {
     }
 
 
-
     @Override
     public void run(String... args) throws Exception {
-//        loadUsers();
-//        loadCategories();
-//        loadBlogs();
-//        loadRoles();
+        loadRoles();
+        loadCategories();
+        loadBlogs();
+        loadUsers();
 
         System.out.println(AppUtils.dateFormatter(LocalDateTime.now()));
 
@@ -66,6 +64,27 @@ public class BootstrapData implements CommandLineRunner {
     private final Category tech = new Category();
     private final Category movies = new Category();
     private final Category novels = new Category();
+
+    private void loadRoles() {
+
+        try {
+            Role userNormal = new Role();
+            userNormal.setRoleId(AppConstants.ROLE_NORMAL_CODE);
+            userNormal.setRole("NORMAL_USER");
+
+            Role userAdmin = new Role();
+            userAdmin.setRoleId(AppConstants.ROLE_ADMIN_CODE);
+            userAdmin.setRole("ADMIN_USER");
+
+            List<Role> roles = List.of(userAdmin, userNormal);
+
+            List<Role> result = roleRepository.saveAll(roles);
+
+            result.forEach(r -> System.out.println(r.getRole()));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
 
 
     private void loadCategories() {
@@ -94,12 +113,12 @@ public class BootstrapData implements CommandLineRunner {
     private void loadUsers() {
 
         Role userNormal = new Role();
-        userNormal.setRoleId(AppConstants.NORMAL_USER);
+        userNormal.setRoleId(AppConstants.ROLE_NORMAL_CODE);
         userNormal.setRole("NORMAL_USER");
 
 
         Role userAdmin = new Role();
-        userAdmin.setRoleId(AppConstants.ADMIN_USER);
+        userAdmin.setRoleId(AppConstants.ROLE_ADMIN_CODE);
         userAdmin.setRole("ADMIN_USER");
 
 
@@ -261,28 +280,6 @@ public class BootstrapData implements CommandLineRunner {
         blogRepository.saveAll(blogs);
 
     }
-
-    private void loadRoles() {
-
-        try {
-            Role userNormal = new Role();
-            userNormal.setRoleId(AppConstants.NORMAL_USER);
-            userNormal.setRole("NORMAL_USER");
-
-            Role userAdmin = new Role();
-            userAdmin.setRoleId(AppConstants.ADMIN_USER);
-            userAdmin.setRole("ADMIN_USER");
-
-            List<Role> roles = List.of(userAdmin, userNormal);
-
-            List<Role> result = roleRepository.saveAll(roles);
-
-            result.forEach(r -> System.out.println(r.getRole()));
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
 
 
 }

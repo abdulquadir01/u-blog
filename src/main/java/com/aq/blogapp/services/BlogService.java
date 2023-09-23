@@ -1,7 +1,7 @@
 package com.aq.blogapp.services;
 
-import com.aq.blogapp.payload.DTO.BlogDTO;
-import com.aq.blogapp.payload.response.BlogResponse;
+import com.aq.blogapp.vo.DTO.BlogDTO;
+import com.aq.blogapp.vo.response.BlogResponse;
 
 import java.util.List;
 

@@ -1,16 +1,15 @@
-package com.aq.blogapp.payload.response;
+package com.aq.blogapp.vo.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
 
 @Data
-@NoArgsConstructor
+@Builder
 @AllArgsConstructor
+@RequiredArgsConstructor
 public class ApiResponse {
 
     // 2021.03.24.16.34.26

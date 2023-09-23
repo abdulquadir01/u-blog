@@ -1,12 +1,13 @@
 package com.aq.blogapp.controllers;
 
-import com.aq.blogapp.payload.DTO.BlogDTO;
+import com.aq.blogapp.vo.DTO.BlogDTO;
 import com.aq.blogapp.constants.AppConstants;
 import com.aq.blogapp.exceptions.ResourceNotFoundException;
-import com.aq.blogapp.payload.response.ApiResponse;
-import com.aq.blogapp.payload.response.BlogResponse;
+import com.aq.blogapp.vo.response.ApiResponse;
+import com.aq.blogapp.vo.response.BlogResponse;
 import com.aq.blogapp.services.BlogService;
 import com.aq.blogapp.services.FileService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -25,8 +26,8 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api")
-@CrossOrigin
 public class BlogController {
 
     private final BlogService blogService;
@@ -35,10 +36,10 @@ public class BlogController {
     @Value("${project.image_path}")
     private String imagePath;
 
-    public BlogController(BlogService blogService, FileService fileService) {
-        this.blogService = blogService;
-        this.fileService = fileService;
-    }
+//    public BlogController(BlogService blogService, FileService fileService) {
+//        this.blogService = blogService;
+//        this.fileService = fileService;
+//    }
 
 
     @GetMapping("/blogs")
