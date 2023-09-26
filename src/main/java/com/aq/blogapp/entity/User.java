@@ -1,4 +1,4 @@
-package com.aq.blogapp.model;
+package com.aq.blogapp.entity;
 
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -44,7 +44,7 @@ public class User implements UserDetails {
     @ToString.Exclude
     private Set<Comment> comments = new HashSet<>();
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user", referencedColumnName = "userId"),
             inverseJoinColumns = @JoinColumn(name = "roles", referencedColumnName = "roleId")

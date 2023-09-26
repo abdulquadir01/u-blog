@@ -1,7 +1,7 @@
 package com.aq.blogapp.utils.mappers;
 
 import com.aq.blogapp.vo.DTO.UserDTO;
-import com.aq.blogapp.model.User;
+import com.aq.blogapp.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

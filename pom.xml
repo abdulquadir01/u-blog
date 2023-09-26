@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.aq</groupId>
-    <artifactId>blog-app</artifactId>
+    <artifactId>blog-backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>blog-app</name>
-    <description>blog-app</description>
+    <description>blog-app-backend</description>
     <properties>
         <java.version>11</java.version>
     </properties>
@@ -52,13 +52,7 @@
 <!--    Swagger    -->
         <dependency>
             <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>3.0.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
+            <artifactId>springfox-boot-starter</artifactId>
             <version>3.0.0</version>
         </dependency>
 

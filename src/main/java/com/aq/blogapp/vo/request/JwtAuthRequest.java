@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 
 @Data
 @Builder
+@AllArgsConstructor
+@RequiredArgsConstructor
 public class JwtAuthRequest {
     private String username;
     private String password;

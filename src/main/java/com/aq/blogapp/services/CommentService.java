@@ -1,7 +1,7 @@
 package com.aq.blogapp.services;
 
-import com.aq.blogapp.model.Blog;
-import com.aq.blogapp.model.User;
+import com.aq.blogapp.entity.Blog;
+import com.aq.blogapp.entity.User;
 import com.aq.blogapp.vo.DTO.CommentDTO;
 
 import java.util.List;

@@ -3,7 +3,7 @@ package com.aq.blogapp.services.impl;
 import com.aq.blogapp.vo.DTO.CategoryDTO;
 import com.aq.blogapp.exceptions.ResourceNotFoundException;
 import com.aq.blogapp.utils.mappers.CategoryMapper;
-import com.aq.blogapp.model.Category;
+import com.aq.blogapp.entity.Category;
 import com.aq.blogapp.respositories.CategoryRepository;
 import com.aq.blogapp.services.CategoryService;
 import com.aq.blogapp.utils.AppUtils;

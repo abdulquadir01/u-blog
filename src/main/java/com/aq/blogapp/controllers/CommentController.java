@@ -1,7 +1,7 @@
 package com.aq.blogapp.controllers;
 
-import com.aq.blogapp.model.Blog;
-import com.aq.blogapp.model.User;
+import com.aq.blogapp.entity.Blog;
+import com.aq.blogapp.entity.User;
 import com.aq.blogapp.vo.DTO.CommentDTO;
 import com.aq.blogapp.vo.response.ApiResponse;
 import com.aq.blogapp.services.BlogService;

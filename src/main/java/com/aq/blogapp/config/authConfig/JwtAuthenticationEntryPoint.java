@@ -1,4 +1,4 @@
-package com.aq.blogapp.config.jwtConfig;
+package com.aq.blogapp.config.authConfig;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

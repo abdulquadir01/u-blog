@@ -1,6 +1,6 @@
 package com.aq.blogapp.respositories;
 
-import com.aq.blogapp.model.User;
+import com.aq.blogapp.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

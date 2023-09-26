@@ -12,6 +12,8 @@ import javax.validation.constraints.Size;
 
 @Data
 @Builder
+@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserRequest {
     @NotEmpty
     @Size(min = 3, message = "First Name must be at least 3 characters")

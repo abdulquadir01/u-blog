@@ -1,4 +1,4 @@
-package com.aq.blogapp.model;
+package com.aq.blogapp.entity;
 
 import lombok.*;
 
@@ -19,7 +19,7 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int roleId;
 
-    private String roleCode;
+    private int roleCode;
 
     private String role;
 

@@ -4,7 +4,7 @@ import com.aq.blogapp.vo.DTO.UserDTO;
 import com.aq.blogapp.exceptions.LoginException;
 import com.aq.blogapp.vo.request.JwtAuthRequest;
 import com.aq.blogapp.vo.response.JwtAuthResponse;
-import com.aq.blogapp.config.jwtConfig.JwtTokenHelper;
+import com.aq.blogapp.config.authConfig.JwtTokenHelper;
 import com.aq.blogapp.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

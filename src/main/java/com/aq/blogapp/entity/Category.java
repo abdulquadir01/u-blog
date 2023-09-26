@@ -1,4 +1,4 @@
-package com.aq.blogapp.model;
+package com.aq.blogapp.entity;
 
 import lombok.*;
 import org.hibernate.Hibernate;

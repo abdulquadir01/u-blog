@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 
 @Data
 @Builder
+@AllArgsConstructor
+@RequiredArgsConstructor
 public class RoleRequest {
 
     private int roleCode;

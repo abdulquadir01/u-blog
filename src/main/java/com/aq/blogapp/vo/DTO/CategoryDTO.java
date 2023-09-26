@@ -1,6 +1,5 @@
 package com.aq.blogapp.vo.DTO;
 
-
 import lombok.*;
 
 import javax.validation.constraints.NotEmpty;

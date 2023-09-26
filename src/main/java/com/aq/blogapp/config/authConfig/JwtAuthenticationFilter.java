@@ -1,4 +1,4 @@
-package com.aq.blogapp.config.jwtConfig;
+package com.aq.blogapp.config.authConfig;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;

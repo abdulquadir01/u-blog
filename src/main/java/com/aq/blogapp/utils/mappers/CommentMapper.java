@@ -1,7 +1,7 @@
 package com.aq.blogapp.utils.mappers;
 
 import com.aq.blogapp.vo.DTO.CommentDTO;
-import com.aq.blogapp.model.Comment;
+import com.aq.blogapp.entity.Comment;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

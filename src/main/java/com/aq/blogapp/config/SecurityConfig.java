@@ -1,8 +1,8 @@
 package com.aq.blogapp.config;
 
-import com.aq.blogapp.config.jwtConfig.CustomUserDetailService;
-import com.aq.blogapp.config.jwtConfig.JwtAuthenticationEntryPoint;
-import com.aq.blogapp.config.jwtConfig.JwtAuthenticationFilter;
+import com.aq.blogapp.config.authConfig.CustomUserDetailService;
+import com.aq.blogapp.config.authConfig.JwtAuthenticationEntryPoint;
+import com.aq.blogapp.config.authConfig.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,8 +27,8 @@ import java.util.List;
 
 
 @Configuration
-@EnableWebSecurity
 @EnableWebMvc
+@EnableWebSecurity
 @RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
@@ -46,15 +46,6 @@ public class SecurityConfig {
     private final JwtAuthenticationEntryPoint authEntryPoint;
     private final JwtAuthenticationFilter authFilter;
 
-//    public SecurityConfig(
-//            CustomUserDetailService userDetailService,
-//            JwtAuthenticationEntryPoint authEntryPoint,
-//            JwtAuthenticationFilter authFilter
-//    ){
-//        this.userDetailService = userDetailService;
-//        this.authEntryPoint = authEntryPoint;
-//        this.authFilter = authFilter;
-//    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -64,10 +55,8 @@ public class SecurityConfig {
                     .csrf()
                     .disable()
                     .authorizeRequests()
-                    .antMatchers(PUBLIC_URLS)
-                        .permitAll()
-                    .antMatchers(HttpMethod.GET)
-                        .permitAll()            //allow all GET request
+                    .antMatchers(PUBLIC_URLS).permitAll()
+                    .antMatchers(HttpMethod.GET).permitAll()            //allow all GET request
                     .anyRequest()
                     .authenticated()
                         .and()
@@ -96,33 +85,6 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
-
-
-//    @Bean
-//    public FilterRegistrationBean corsFilter() {
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//
-//        CorsConfiguration configuration = new CorsConfiguration();
-//        configuration.setAllowCredentials(true);
-//        configuration.addAllowedOriginPattern("*");
-//        configuration.addAllowedMethod("GET");
-//        configuration.addAllowedMethod("POST");
-//        configuration.addAllowedMethod("PUT");
-//        configuration.addAllowedMethod("DELETE");
-//        configuration.addAllowedMethod("OPTIONS");
-//        configuration.addAllowedHeader("Accept");
-//        configuration.addAllowedHeader("Authorization");
-//        configuration.addAllowedHeader("Content-Type");
-//        configuration.setMaxAge(1800L);
-//
-//        source.registerCorsConfiguration("/**", configuration);
-//
-//        FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
-//        bean.setOrder(-110);
-//
-//        return bean;
-//    }
-
 
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider () throws Exception {

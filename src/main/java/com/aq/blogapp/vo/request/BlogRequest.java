@@ -11,6 +11,8 @@ import javax.validation.constraints.Size;
 
 @Data
 @Builder
+@AllArgsConstructor
+@RequiredArgsConstructor
 public class BlogRequest {
 
     @NotEmpty

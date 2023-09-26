@@ -1,7 +1,6 @@
-package com.aq.blogapp.model;
+package com.aq.blogapp.entity;
 
 import lombok.*;
-import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -28,10 +27,10 @@ public class Blog {
     private String content;
 
     @Column(name = "blog_image", nullable = false, length = 128)
-    private String imageName;
+    private String imageName = "";
 
     @Column(name = "blogging_date",nullable = false, length = 128)
-    private String bloggedDate;
+    private String bloggedDate = "";
 
     @ManyToOne
     @JoinColumn(name = "category_id")

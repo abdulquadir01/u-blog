@@ -1,15 +1,15 @@
 package com.aq.blogapp;
 
 import com.aq.blogapp.constants.AppConstants;
-import com.aq.blogapp.model.Blog;
-import com.aq.blogapp.model.Category;
-import com.aq.blogapp.model.Role;
-import com.aq.blogapp.model.User;
+import com.aq.blogapp.entity.Blog;
+import com.aq.blogapp.entity.Category;
+import com.aq.blogapp.entity.Role;
+import com.aq.blogapp.entity.User;
 import com.aq.blogapp.respositories.BlogRepository;
 import com.aq.blogapp.respositories.CategoryRepository;
 import com.aq.blogapp.respositories.RoleRepository;
 import com.aq.blogapp.respositories.UserRepository;
-import com.aq.blogapp.utils.AppUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -20,32 +20,22 @@ import java.util.List;
 
 
 @Component
+@RequiredArgsConstructor
 public class BootstrapData implements CommandLineRunner {
 
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
     private final BlogRepository blogRepository;
     private final RoleRepository roleRepository;
-
     private final PasswordEncoder pwdEncoder;
-
-    public BootstrapData(UserRepository userRepository, CategoryRepository categoryRepository, BlogRepository blogRepository, RoleRepository roleRepository, PasswordEncoder pwdEncoder) {
-        this.userRepository = userRepository;
-        this.categoryRepository = categoryRepository;
-        this.blogRepository = blogRepository;
-        this.roleRepository = roleRepository;
-        this.pwdEncoder = pwdEncoder;
-    }
 
 
     @Override
     public void run(String... args) throws Exception {
         loadRoles();
+        loadUsers();
         loadCategories();
         loadBlogs();
-        loadUsers();
-
-        System.out.println(AppUtils.dateFormatter(LocalDateTime.now()));
 
         System.out.println("User count in table users : " + userRepository.count());
         System.out.println("Blog count in table blogs : " + blogRepository.count());
@@ -54,29 +44,34 @@ public class BootstrapData implements CommandLineRunner {
     }
 
 
-    private final User johnCena = new User();
-    private final User johnDoe = new User();
-    private final User johnWick = new User();
-    private final User deadPool = new User();
-    private final User byomukesh = new User();
+    private User johnCena = new User();
+    private User johnDoe = new User();
+    private User johnWick = new User();
+    private User deadPool = new User();
+    private User byomukesh = new User();
 
-    private final Category sports = new Category();
-    private final Category tech = new Category();
-    private final Category movies = new Category();
-    private final Category novels = new Category();
+    private Category sports = new Category();
+    private Category tech = new Category();
+    private Category movies = new Category();
+    private Category novels = new Category();
+
+    private Role normalUser;
+    private Role adminUser;
 
     private void loadRoles() {
 
         try {
-            Role userNormal = new Role();
-            userNormal.setRoleId(AppConstants.ROLE_NORMAL_CODE);
-            userNormal.setRole("NORMAL_USER");
+            normalUser = Role.builder()
+                    .roleCode(AppConstants.ROLE_NORMAL_CODE)
+                    .role("NORMAL_USER")
+                    .build();
 
-            Role userAdmin = new Role();
-            userAdmin.setRoleId(AppConstants.ROLE_ADMIN_CODE);
-            userAdmin.setRole("ADMIN_USER");
+            adminUser = Role.builder()
+                    .roleCode(AppConstants.ROLE_ADMIN_CODE)
+                    .role("ADMIN_USER")
+                    .build();
 
-            List<Role> roles = List.of(userAdmin, userNormal);
+            List<Role> roles = List.of(normalUser, adminUser);
 
             List<Role> result = roleRepository.saveAll(roles);
 
@@ -86,24 +81,26 @@ public class BootstrapData implements CommandLineRunner {
         }
     }
 
-
     private void loadCategories() {
-        Category sports = this.sports;
-        sports.setCategoryTitle("Sports");
-        sports.setCategoryDescription("All the blogs related to sports");
+        this.sports = Category.builder()
+                .categoryTitle("Sports")
+                .categoryDescription("All the blogs related to sports")
+                .build();
 
+        this.tech = Category.builder()
+                .categoryTitle("Technology")
+                .categoryDescription("All the happenings in the tech world")
+                .build();
 
-        Category tech = this.tech;
-        tech.setCategoryTitle("Technology");
-        tech.setCategoryDescription("All the happenings in the tech world");
+        this.movies = Category.builder()
+                .categoryTitle("Movies")
+                .categoryDescription("Blogs about the best movies of all times")
+                .build();
 
-        Category movies = this.movies;
-        movies.setCategoryTitle("Movies");
-        movies.setCategoryDescription("Blogs about the best movies of all times");
-
-        Category novels = this.novels;
-        novels.setCategoryTitle("Novels");
-        novels.setCategoryDescription("Blogs about the best novels of all times");
+        this.novels = Category.builder()
+                .categoryTitle("Novels")
+                .categoryDescription("Blogs about the best novels of all times")
+                .build();
 
         List<Category> categories = List.of(sports, tech, movies, novels);
         categoryRepository.saveAll(categories);
@@ -112,24 +109,13 @@ public class BootstrapData implements CommandLineRunner {
 
     private void loadUsers() {
 
-        Role userNormal = new Role();
-        userNormal.setRoleId(AppConstants.ROLE_NORMAL_CODE);
-        userNormal.setRole("NORMAL_USER");
-
-
-        Role userAdmin = new Role();
-        userAdmin.setRoleId(AppConstants.ROLE_ADMIN_CODE);
-        userAdmin.setRole("ADMIN_USER");
-
-
         User johnCena = this.johnCena;
         johnCena.setFirstName("Jhon");
         johnCena.setLastName("Cena");
         johnCena.setEmail("johncena@wwe.org");
         johnCena.setPassword(pwdEncoder.encode("p@ssW0rd"));
         johnCena.setAbout("This guy is a wrestler & an actor.");
-        johnCena.getRoles().add(userNormal);
-
+        johnCena.getRoles().add(normalUser);
 
         User johnDoe = this.johnDoe;
         johnDoe.setFirstName("Jhon");
@@ -137,8 +123,7 @@ public class BootstrapData implements CommandLineRunner {
         johnDoe.setEmail("jdoe@wwe.org");
         johnDoe.setPassword(pwdEncoder.encode("p@ssW0rd"));
         johnDoe.setAbout("This guy is a Cyber-security Professional");
-        johnDoe.getRoles().add(userNormal);
-
+        johnDoe.getRoles().add(normalUser);
 
         User johnWick = this.johnWick;
         johnWick.setFirstName("Jhon");
@@ -146,8 +131,7 @@ public class BootstrapData implements CommandLineRunner {
         johnWick.setEmail("jwick@wwe.org");
         johnWick.setPassword(pwdEncoder.encode("p@ssW0rd"));
         johnWick.setAbout("This guy is a Missionary");
-        johnWick.getRoles().add(userNormal);
-
+        johnWick.getRoles().add(normalUser);
 
         User deadPool = this.deadPool;
         deadPool.setFirstName("Dead");
@@ -155,8 +139,7 @@ public class BootstrapData implements CommandLineRunner {
         deadPool.setEmail("pooldead@gmail.com");
         deadPool.setPassword(pwdEncoder.encode("p@ssW0rd"));
         deadPool.setAbout("This guy is a Mutant");
-        deadPool.getRoles().add(userNormal);
-
+        deadPool.getRoles().add(normalUser);
 
         User byomukesh = this.byomukesh;
         byomukesh.setFirstName("Byomukesh");
@@ -164,8 +147,7 @@ public class BootstrapData implements CommandLineRunner {
         byomukesh.setEmail("bbakshi@gmail.com");
         byomukesh.setPassword(pwdEncoder.encode("p@ssW0rd"));
         byomukesh.setAbout("This guy is a private Detective");
-        byomukesh.getRoles().add(userAdmin);
-
+        byomukesh.getRoles().add(adminUser);
 
         List<User> users = List.of(johnCena, johnDoe, johnWick, deadPool, byomukesh);
         userRepository.saveAll(users);
@@ -179,14 +161,12 @@ public class BootstrapData implements CommandLineRunner {
         String formattedDate = localDateTime.format(dateTimeFormatter);
         System.out.println("Formatted Date: "+ formattedDate);
 
-
         Blog blog1 = new Blog();
         blog1.setTitle("Cricket U19 Champions");
         blog1.setContent("The first month of 2023 has ended with a bang with India winning the ICC U19 Women Cricket World Cup.");
         blog1.setCategory(sports);
         blog1.setUser(byomukesh);
         blog1.setBloggedDate(formattedDate);
-
 
         Blog blog2 = new Blog();
         blog2.setTitle("Intel ARC! is getting better?");
@@ -195,14 +175,12 @@ public class BootstrapData implements CommandLineRunner {
         blog2.setUser(johnDoe);
         blog2.setBloggedDate(formattedDate);
 
-
         Blog blog3 = new Blog();
         blog3.setTitle("Pathan");
         blog3.setContent("SRK's awaited movie Pathan has been release on 16th of Jan,2023 and is has broke all the previous day one Box Office collection records");
         blog3.setCategory(movies);
         blog3.setUser(byomukesh);
         blog3.setBloggedDate(formattedDate);
-
 
         Blog blog4 = new Blog();
         blog4.setTitle("Ronaldo, there is still a fight");
@@ -211,14 +189,12 @@ public class BootstrapData implements CommandLineRunner {
         blog4.setUser(johnCena);
         blog4.setBloggedDate(formattedDate);
 
-
         Blog blog5 = new Blog();
         blog5.setTitle("The OceanCleanUp3");
         blog5.setContent("The first month of 2023 has ended with a bang with India winning the ICC U19 Women Cricket World Cup.");
         blog5.setCategory(tech);
         blog5.setUser(byomukesh);
         blog5.setBloggedDate(formattedDate);
-
 
         Blog blog6 = new Blog();
         blog6.setTitle("The OceanCleanUp3");
@@ -227,14 +203,12 @@ public class BootstrapData implements CommandLineRunner {
         blog6.setUser(deadPool);
         blog6.setBloggedDate(formattedDate);
 
-
         Blog blog7 = new Blog();
         blog7.setTitle("Avatar 2, 13 years in making");
         blog7.setContent("Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.");
         blog7.setCategory(movies);
         blog7.setUser(johnWick);
         blog7.setBloggedDate(formattedDate);
-
 
         Blog blog8 = new Blog();
         blog8.setTitle("Volleyball");
@@ -243,14 +217,12 @@ public class BootstrapData implements CommandLineRunner {
         blog8.setUser(johnCena);
         blog8.setBloggedDate(formattedDate);
 
-
         Blog blog9 = new Blog();
         blog9.setTitle("Hundai & the future of ICE");
         blog9.setContent("Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.");
         blog9.setCategory(tech);
         blog9.setUser(byomukesh);
         blog9.setBloggedDate(formattedDate);
-
 
         Blog blog10 = new Blog();
         blog10.setTitle("Wakanda2");
@@ -259,14 +231,12 @@ public class BootstrapData implements CommandLineRunner {
         blog10.setUser(johnCena);
         blog10.setBloggedDate(formattedDate);
 
-
         Blog blog11 = new Blog();
         blog11.setTitle("The Two Sons");
         blog11.setContent("Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.");
         blog11.setCategory(novels);
         blog11.setUser(byomukesh);
         blog11.setBloggedDate(formattedDate);
-
 
         Blog blog12 = new Blog();
         blog12.setTitle("The Green Book");
@@ -280,6 +250,5 @@ public class BootstrapData implements CommandLineRunner {
         blogRepository.saveAll(blogs);
 
     }
-
 
 }
