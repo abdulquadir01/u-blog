@@ -31,7 +31,7 @@ public class BlogDTO {
 
     private UserDTO user;
 
-//    private Set<CommentDTO> comments = new LinkedHashSet<>();
+    private Set<CommentDTO> comments = new LinkedHashSet<>();
 
 
 }
