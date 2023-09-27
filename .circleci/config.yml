@@ -6,7 +6,7 @@ version: 2.1
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
   # Below is the definition of your job to build and test your app, you can rename and customize it as you want.
-  compile:
+  build:
     # These next lines define a Docker executor: https://circleci.com/docs/2.0/executor-types/
     # You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # Be sure to update the Docker image tag below to openjdk version of your application.
@@ -22,29 +22,11 @@ jobs:
       - run:
           name: Compile
           command: mvn -B -DskipTests clean install
-#      # Then run your unit tests!
-#      - run:
-#          name: Test
-#          command: mvn test
-#      # Package your code!
-#      - run:
-#          name: Package
-#          command: mvn -B -DskipTests clean package
-
-  unit test:
-    docker:
-      - image: cimg/openjdk:11.0
-    steps:
-      - checkout
+      # Then run your unit tests!
       - run:
-          name: Unit Test
+          name: Test
           command: mvn test
-
-  package:
-    docker:
-      - image: cimg/openjdk:11.0
-    steps:
-      - checkout
+      # Package your code!
       - run:
           name: Package
           command: mvn -B -DskipTests clean package
@@ -56,6 +38,4 @@ workflows:
   sample: # This is the name of the workflow, feel free to change it to better match your workflow.
     # Inside the workflow, you define the jobs you want to run.
     jobs:
-      - compile
-      - unit test
-      - package
+      - build
